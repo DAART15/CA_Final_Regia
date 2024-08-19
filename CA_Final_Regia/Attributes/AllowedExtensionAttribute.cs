@@ -12,7 +12,7 @@ namespace CA_Final_Regia.Attributes
                 var extension = Path.GetExtension(file.FileName);
                 if (!_extensions.Contains(extension.ToLower()))
                 {
-                    return new ValidationResult($"This photo extension is not allowed. Allowed extensions are {string.Join(", ", _extensions)}");
+                    return new ValidationResult($"This photo extension is not allowed. Allowed extension is .jpg ");
                 }
             }
             return ValidationResult.Success;

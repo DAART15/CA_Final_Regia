@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 namespace CA_Final_Regia.Domain.Models
 {
-    internal class Person
+    public class Person
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -12,8 +12,5 @@ namespace CA_Final_Regia.Domain.Models
         [MinLength(5)]
         public string PhoneNumber { get; set; }
         public string Mail {get; set; }
-        public Account Account { get; set; }
-        public Account AccountId { get; set; }
-
     }
 }

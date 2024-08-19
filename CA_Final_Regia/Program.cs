@@ -1,4 +1,4 @@
-
+using CA_Final_Regia.Infrastructure.Extensions;
 namespace CA_Final_Regia
 {
     public class Program
@@ -14,6 +14,9 @@ namespace CA_Final_Regia
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+
+
+            builder.Services.AddDatabaseServices(builder.Configuration.GetConnectionString("DefaultConnection"));
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

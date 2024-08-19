@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CA_Final_Regia.Domain.Models
+﻿namespace CA_Final_Regia.Domain.Models
 {
-    internal class Location
+    public class Location
     {
         public string City { get; set; }
         public string Street { get; set; }
