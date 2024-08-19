@@ -14,4 +14,9 @@
     <Folder Include="Controllers\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CA_Final_Regia.Domain\CA_Final_Regia.Domain.csproj" />
+    <ProjectReference Include="..\CA_Final_Regia.Infrastructure\CA_Final_Regia.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
