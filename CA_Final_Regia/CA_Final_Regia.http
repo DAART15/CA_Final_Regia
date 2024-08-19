@@ -1,0 +1,6 @@
+@CA_Final_Regia_HostAddress = http://localhost:5002
+
+GET {{CA_Final_Regia_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
