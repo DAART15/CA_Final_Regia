@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CA_Final_Regia.Infrastructure.Migrations
 {
     [DbContext(typeof(AplicationDbContext))]
-    [Migration("20240820093415_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20240820123717_InitalWithConfigurations")]
+    partial class InitalWithConfigurations
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -62,26 +62,33 @@ namespace CA_Final_Regia.Infrastructure.Migrations
             modelBuilder.Entity("CA_Final_Regia.Domain.Models.Location", b =>
                 {
                     b.Property<Guid>("AccountId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("ApartmentNr")
-                        .HasColumnType("int");
+                    b.Property<string>("ApartmentNr")
+                        .IsRequired()
+                        .HasMaxLength(4)
+                        .HasColumnType("nvarchar(4)");
 
                     b.Property<string>("City")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
-                    b.Property<int>("HouseNr")
-                        .HasColumnType("int");
-
-                    b.Property<long>("PersonalId")
-                        .HasColumnType("bigint");
+                    b.Property<string>("HouseNr")
+                        .IsRequired()
+                        .HasMaxLength(5)
+                        .HasColumnType("nvarchar(5)");
 
                     b.Property<string>("Street")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("AccountId");
+
+                    b.HasIndex("AccountId")
+                        .IsUnique();
 
                     b.ToTable("Locations");
                 });
@@ -97,15 +104,18 @@ namespace CA_Final_Regia.Infrastructure.Migrations
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("Mail")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<long>("PersonalId")
                         .HasMaxLength(11)
@@ -118,18 +128,10 @@ namespace CA_Final_Regia.Infrastructure.Migrations
 
                     b.HasKey("AccountId");
 
+                    b.HasIndex("AccountId")
+                        .IsUnique();
+
                     b.ToTable("Persons");
-                });
-
-            modelBuilder.Entity("CA_Final_Regia.Domain.Models.Location", b =>
-                {
-                    b.HasOne("CA_Final_Regia.Domain.Models.Person", "Person")
-                        .WithOne("Location")
-                        .HasForeignKey("CA_Final_Regia.Domain.Models.Location", "AccountId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Person");
                 });
 
             modelBuilder.Entity("CA_Final_Regia.Domain.Models.Person", b =>
@@ -140,7 +142,15 @@ namespace CA_Final_Regia.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("CA_Final_Regia.Domain.Models.Location", "Location")
+                        .WithOne("Person")
+                        .HasForeignKey("CA_Final_Regia.Domain.Models.Person", "AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Account");
+
+                    b.Navigation("Location");
                 });
 
             modelBuilder.Entity("CA_Final_Regia.Domain.Models.Account", b =>
@@ -148,9 +158,9 @@ namespace CA_Final_Regia.Infrastructure.Migrations
                     b.Navigation("Person");
                 });
 
-            modelBuilder.Entity("CA_Final_Regia.Domain.Models.Person", b =>
+            modelBuilder.Entity("CA_Final_Regia.Domain.Models.Location", b =>
                 {
-                    b.Navigation("Location")
+                    b.Navigation("Person")
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

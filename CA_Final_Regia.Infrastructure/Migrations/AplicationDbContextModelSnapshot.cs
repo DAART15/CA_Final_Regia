@@ -77,9 +77,6 @@ namespace CA_Final_Regia.Infrastructure.Migrations
                         .HasMaxLength(5)
                         .HasColumnType("nvarchar(5)");
 
-                    b.Property<long>("PersonalId")
-                        .HasColumnType("bigint");
-
                     b.Property<string>("Street")
                         .IsRequired()
                         .HasMaxLength(100)

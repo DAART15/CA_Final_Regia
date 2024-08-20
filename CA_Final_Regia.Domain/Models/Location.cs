@@ -13,6 +13,5 @@ namespace CA_Final_Regia.Domain.Models
         public string HouseNr { get; set; }
         public string ApartmentNr { get; set; }
         public Person Person { get; set; }
-        public long PersonalId { get; set; }
     }
 }
