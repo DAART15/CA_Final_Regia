@@ -1,4 +1,7 @@
 using CA_Final_Regia.Infrastructure.Extensions;
+using CA_Final_Regia.Interfaces;
+using CA_Final_Regia.Services.UserServices;
+
 namespace CA_Final_Regia
 {
     public class Program
@@ -13,6 +16,10 @@ namespace CA_Final_Regia
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            builder.Services.AddScoped<IUserRegisterService, UserRegisterService>();
+            builder.Services.AddScoped<IUserLogInService, UserLogInService>();
+
 
 
 

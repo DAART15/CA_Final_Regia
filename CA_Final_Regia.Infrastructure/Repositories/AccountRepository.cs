@@ -4,14 +4,10 @@ using CA_Final_Regia.Infrastructure.Interfaces;
 using Microsoft.EntityFrameworkCore;
 namespace CA_Final_Regia.Infrastructure.Repositories
 {
-    public class AccountRepository : IAccountRepository
+    public class AccountRepository(AplicationDbContext dbContext) : IAccountRepository
     {
-        private readonly AplicationDbContext _dbContext;
-
-        public AccountRepository(AplicationDbContext dbContext)
-        {
-            _dbContext = dbContext;
-        }
+        private readonly AplicationDbContext _dbContext = dbContext;
+        
         public async Task<Account> GetAccountAsync(string userName)
         {
             return await _dbContext.Accounts.FirstOrDefaultAsync(a => a.UserName == userName);

@@ -1,7 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace CA_Final_Regia.Domain.Models
+﻿namespace CA_Final_Regia.Domain.Models
 {
     public class Account
     {
