@@ -8,20 +8,41 @@ namespace CA_Final_Regia.Infrastructure.Repositories
     {
         private readonly AplicationDbContext _dbContext = dbContext;
         
-        public async Task<Account> GetAccountAsync(string userName)
+        public async Task<Account?> GetAccountAsync(string userName)
         {
-            return await _dbContext.Accounts.FirstOrDefaultAsync(a => a.UserName == userName);
+            try
+            {
+                return await _dbContext.Accounts.FirstOrDefaultAsync(a => a.UserName == userName);
+            }
+            catch (ArgumentException ex)
+            {
+                throw new ArgumentException(ex.Message);
+            }
         }
         public async Task<Account> CreateAccountAsync(Account account)
         {
-            await _dbContext.Accounts.AddAsync(account);
-            await _dbContext.SaveChangesAsync();
-            return account;
+            try
+            {
+                await _dbContext.Accounts.AddAsync(account);
+                await _dbContext.SaveChangesAsync();
+                return account;
+            }
+            catch (ArgumentException ex)
+            {
+                throw new ArgumentException(ex.Message);
+            }
         }
         public async Task DeleteAccountAsync(Account account)
         {
-            _dbContext.Accounts.Remove(account);
-            await _dbContext.SaveChangesAsync();
+            try
+            {
+                _dbContext.Accounts.Remove(account);
+                await _dbContext.SaveChangesAsync();
+            }
+            catch (ArgumentException ex)
+            {
+                throw new ArgumentException(ex.Message);
+            }
         }
     }
 }

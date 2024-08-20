@@ -1,4 +1,6 @@
-﻿using CA_Final_Regia.Infrastructure.Interfaces;
+﻿using CA_Final_Regia.Domain.Models;
+using CA_Final_Regia.DTOs;
+using CA_Final_Regia.Infrastructure.Interfaces;
 using CA_Final_Regia.Interfaces;
 using System.Security.Cryptography;
 using System.Text;
@@ -9,21 +11,25 @@ namespace CA_Final_Regia.Services.UserServices
     {
         private readonly IAccountRepository _accountRepository = accountRepository;
 
-        public async Task LogIn(string username, string password)
+        public async Task<ResponseDto<Account>> LogInAsync(string username, string password)
         {
-            var acc = await _accountRepository.GetAccountAsync(username);
-
-            if (acc == null)
+            try
             {
-                return false;
+                var acc = await _accountRepository.GetAccountAsync(username);
+                if (acc == null)
+                {
+                    return new ResponseDto<Account>(false, "User not found", ResponseDto<Account>.Status.Not_Found);
+                }
+                if (VerifyPasswordHash(password, acc.Password, acc.Salt))
+                {
+                    return new ResponseDto<Account>(true, "Connected successfully", ResponseDto<Account>.Status.Ok, acc.Role);
+                }
+                return new ResponseDto<Account>(false, "Bad password", ResponseDto<Account>.Status.Not_Found);
             }
-
-            if (VerifyPasswordHash(password, acc.Password, acc.Salt))
+            catch (ArgumentException ex)
             {
-                return true;
+                throw new ArgumentException(ex.Message);
             }
-
-            return false;
         }
         private bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] salt)
         {

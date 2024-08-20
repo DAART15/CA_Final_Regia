@@ -9,7 +9,7 @@ namespace CA_Final_Regia.Infrastructure.Interfaces
 {
     public interface IAccountRepository
     {
-        Task<Account> GetAccountAsync(string userName);
+        Task<Account?> GetAccountAsync(string userName);
         Task<Account> CreateAccountAsync(Account account);
         Task DeleteAccountAsync(Account account);
     }

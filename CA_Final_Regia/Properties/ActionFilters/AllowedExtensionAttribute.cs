@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CA_Final_Regia.Attributes
+namespace CA_Final_Regia.Properties.ActionFilters
 {
     public class AllowedExtensionAttribute(string[] _extensions) : ValidationAttribute
     {
