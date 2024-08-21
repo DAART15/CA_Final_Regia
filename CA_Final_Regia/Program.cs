@@ -1,6 +1,7 @@
 using CA_Final_Regia.Infrastructure.Extensions;
 using CA_Final_Regia.Interfaces;
 using CA_Final_Regia.Services.JwtService;
+using CA_Final_Regia.Services.LocationServices;
 using CA_Final_Regia.Services.PersonServices;
 using CA_Final_Regia.Services.PictureServices;
 using CA_Final_Regia.Services.UserServices;
@@ -96,7 +97,7 @@ namespace CA_Final_Regia
             builder.Services.AddScoped<IPictureResizeService, PictureResizeService>();
             builder.Services.AddScoped<IPictureToByteService, PictureToByteService>();
             builder.Services.AddScoped<IPersonAddInfoServise, PersonAddInfoServise>();
-
+            builder.Services.AddScoped<ILocationAddService, LocationAddService>();
 
             // from Infrastructure.Extensions
             builder.Services.AddDatabaseServices(builder.Configuration.GetConnectionString("DefaultConnection"));

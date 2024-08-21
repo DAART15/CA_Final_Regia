@@ -1,5 +1,6 @@
 ﻿using CA_Final_Regia.Interfaces;
 using System.Drawing;
+using System.Drawing.Imaging;
 namespace CA_Final_Regia.Services.PictureServices
 {
     public class PictureToByteService : IPictureToByteService
@@ -11,7 +12,7 @@ namespace CA_Final_Regia.Services.PictureServices
                 return await Task.Run(() =>
                 {
                     using var memorystream = new MemoryStream();
-                    image.Save(memorystream, image.RawFormat);
+                    image.Save(memorystream, ImageFormat.Jpeg);
                     return memorystream.ToArray();
                 });
             }

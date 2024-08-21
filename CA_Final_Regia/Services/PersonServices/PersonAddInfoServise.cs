@@ -2,21 +2,19 @@
 using CA_Final_Regia.DTOs;
 using CA_Final_Regia.Infrastructure.Interfaces;
 using CA_Final_Regia.Interfaces;
-using Microsoft.Identity.Client;
-
 namespace CA_Final_Regia.Services.PersonServices
 {
-    public class PersonAddInfoServise(IPersonRepository personRepository, IPictureToByteService pictureToByteService, IPictureResizeService pictureResizeService, IJwtService jwtService) : IPersonAddInfoServise
+    public class PersonAddInfoServise(IPersonRepository personRepository, IPictureResizeService pictureResizeService, IJwtService jwtService) : IPersonAddInfoServise
     {
         private readonly IPersonRepository _personRepository = personRepository;
-        private readonly IPictureToByteService _pictureToByteService = pictureToByteService;
         private readonly IPictureResizeService _pictureResizeService = pictureResizeService;
         private readonly IJwtService _jwtService = jwtService;
+        
         public async Task<ResponseDto<Person>> AddPersonInfoAsync(PersonDto personDto, string token)
         {
             try
             {
-                if (Guid.TryParse(_jwtService.ExtractUsernameFromToken(token), out Guid accountId))
+                if (!Guid.TryParse(_jwtService.ExtractUsernameFromToken(token), out Guid accountId))
                 {
                     return new ResponseDto<Person>(false, "Token is invalid", ResponseDto<Person>.Status.Unauthorized);
                 }
@@ -25,8 +23,7 @@ namespace CA_Final_Regia.Services.PersonServices
                     return new ResponseDto<Person>(false, "Person not added", ResponseDto<Person>.Status.Bad_Request); 
                 }
                 PictureDto picture = new PictureDto { Image = personDto.Image };
-                var resizedImage = await _pictureResizeService.ResizePictureAsync(picture);
-                var imageBytes = await _pictureToByteService.ConvertToByteArrayAsync(resizedImage);
+                var imageBytes = await _pictureResizeService.ResizePictureAsync(picture);
                 Person person = new Person
                 {
                     AccountId = accountId,
@@ -36,8 +33,7 @@ namespace CA_Final_Regia.Services.PersonServices
                     PhoneNumber = personDto.PhoneNumber,
                     Mail = personDto.Mail,
                     FileData = imageBytes,
-                };
-                var response = await _personRepository.CreatePersonAsync(person);
+                };                var response = await _personRepository.CreatePersonAsync(person);
                 if (response == null)
                 {
                     return new ResponseDto<Person>(false, "Person not added", ResponseDto<Person>.Status.Not_Found);

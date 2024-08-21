@@ -1,9 +1,6 @@
-﻿using CA_Final_Regia.Domain.Models;
-using CA_Final_Regia.Interfaces;
+﻿using CA_Final_Regia.Interfaces;
 using CA_Final_Regia.Services.JwtService;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Data;
 
 namespace CA_Final_Regia.Controllers
 {
