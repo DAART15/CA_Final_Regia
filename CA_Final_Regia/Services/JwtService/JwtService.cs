@@ -3,7 +3,6 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-
 namespace CA_Final_Regia.Services.JwtService
 {
     public class JwtService(IConfiguration configuration) : IJwtService
@@ -32,6 +31,13 @@ namespace CA_Final_Regia.Services.JwtService
                 );
 
             return new JwtSecurityTokenHandler().WriteToken(jwt);
+        }
+        public string? ExtractUsernameFromToken(string token)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var jwtToken = tokenHandler.ReadJwtToken(token);
+            var usernameClaim = jwtToken.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier);
+            return usernameClaim?.Value;
         }
     }
 }

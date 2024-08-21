@@ -5,7 +5,8 @@
 
         public bool IsSuccess { get; set; }
         public string Message { get; set; }
-        public string Special { get; set; }
+        public string Role { get; set; }
+        public string AccountId { get; set; }
         public T Object { get; set; }
         public IList<T> List { get; set; }
         public Status StatusCode { get; set; }
@@ -16,12 +17,13 @@
             Message = message;
             StatusCode = statusCode;
         }
-        public ResponseDto(bool isSuccess, string message, Status statusCode, string special)
+        public ResponseDto(bool isSuccess, string message, Status statusCode, string special, string accountId)
         {
             IsSuccess = isSuccess;
             Message = message;
             StatusCode = statusCode;
-            Special = special;
+            Role = special;
+            AccountId = accountId;
         }
 
         public ResponseDto(bool isSuccess, T objectToReturn, Status statusCode)
@@ -44,7 +46,8 @@
             No_Content = 204,
             Bad_Request = 400,
             Not_Found = 404,
-            Internal_Server_Error = 500
+            Internal_Server_Error = 500,
+            Unauthorized = 401
         }
     }
 }

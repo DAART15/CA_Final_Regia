@@ -10,6 +10,7 @@ namespace CA_Final_Regia.Infrastructure.Extensions
     {
         public static IServiceCollection AddDatabaseServices(this IServiceCollection services, string connectionString)
         {
+            services.AddScoped<IPersonRepository, PersonRepository>();
             services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddDbContext<AplicationDbContext>(options =>
             {

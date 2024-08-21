@@ -22,7 +22,7 @@ namespace CA_Final_Regia.Services.UserServices
                 }
                 if (VerifyPasswordHash(password, acc.Password, acc.Salt))
                 {
-                    return new ResponseDto<Account>(true, "Connected successfully", ResponseDto<Account>.Status.Ok, acc.Role);
+                    return new ResponseDto<Account>(true, "Connected successfully", ResponseDto<Account>.Status.Ok, acc.Role, acc.AccountId.ToString());
                 }
                 return new ResponseDto<Account>(false, "Bad password", ResponseDto<Account>.Status.Not_Found);
             }

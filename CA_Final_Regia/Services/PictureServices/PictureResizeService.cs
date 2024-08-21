@@ -1,0 +1,53 @@
+﻿using CA_Final_Regia.DTOs;
+using CA_Final_Regia.Interfaces;
+using System.Drawing;
+namespace CA_Final_Regia.Services.PictureServices
+{
+    public class PictureResizeService : IPictureResizeService 
+    {
+        public async Task<Image> ResizePictureAsync(PictureDto file)
+        {
+            try
+            {
+                using var stream = new MemoryStream();
+                await file.Image.CopyToAsync(stream);
+                stream.Position = 0;
+                using Bitmap bitmap = new Bitmap(stream);
+                Size thumbnailSize = GetThumbnailSize(bitmap);
+                using var thumbnail = bitmap.GetThumbnailImage(thumbnailSize.Width, thumbnailSize.Height, null, IntPtr.Zero);
+                return thumbnail;
+            }
+            catch (ArgumentException ex)
+            {
+                throw new ArgumentException(ex.Message);
+            }
+        }
+        private static Size GetThumbnailSize(Bitmap original)
+        {
+            try
+            {
+                const int maxPixels = 200;
+                int originalWidth = original.Width;
+                int originalHeight = original.Height;
+                if (originalWidth <= maxPixels && originalHeight <= maxPixels)
+                {
+                    return new Size(originalWidth, originalHeight);
+                }
+                double factor;
+                if (originalWidth > originalHeight)
+                {
+                    factor = (double)maxPixels / originalWidth;
+                }
+                else
+                {
+                    factor = (double)maxPixels / originalHeight;
+                }
+                return new Size((int)(originalWidth * factor), (int)(originalHeight * factor));
+            }
+            catch (ArgumentException ex)
+            {
+                throw new ArgumentException(ex.Message);
+            }
+        }
+    }
+}
