@@ -7,10 +7,14 @@ namespace CA_Final_Regia.Services.LocationServices
     public class LocationAddService(ILocationRepository locationRepository) : ILocationAddService
     {
         private readonly ILocationRepository _locationRepository = locationRepository;
-        public async Task<Location> AddLocationAsync(LocationDto locationDto, Guid accountId)
+        public async Task<ResponseDto<Location>> AddLocationAsync(LocationDto locationDto, Guid accountId)
         {
             try
             {
+                if (locationDto == null)
+                {
+                    return new ResponseDto<Location>(false, "Location not added", ResponseDto<Location>.Status.Bad_Request);
+                }
                 Location location = new Location
                 {
                     AccountId = accountId,
@@ -19,7 +23,12 @@ namespace CA_Final_Regia.Services.LocationServices
                     HouseNr = locationDto.HouseNr,
                     ApartmentNr = locationDto.ApartmentNr
                 };
-                return await _locationRepository.CreateLocationAsync(location);
+                var response = await _locationRepository.CreateLocationAsync(location);
+                if (response == null)
+                {
+                    return new ResponseDto<Location>(false, "Location not added", ResponseDto<Location>.Status.Not_Found);
+                }
+                return new ResponseDto<Location>(true, "Location added", ResponseDto<Location>.Status.Created);
             }
             catch (ArgumentException ex)
             {

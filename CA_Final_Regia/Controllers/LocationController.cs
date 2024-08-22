@@ -2,27 +2,28 @@
 using CA_Final_Regia.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace CA_Final_Regia.Controllers
 {
-    [Route("regia/person")]
+    [Route("regia/location")]
     [ApiController]
     [Authorize]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "User")]
-    public class PersonController(IPersonAddInfoService personAddInfoServise, ILogger<PersonController> logger, IJwtExtraxtService jwtExtraxtSerevice) : ControllerBase
+    public class LocationController(ILogger<PersonController> logger, IJwtExtraxtService jwtExtraxtSerevice, ILocationAddService locationAddService) : ControllerBase
     {
-        private readonly IPersonAddInfoService _personAddInfoServise = personAddInfoServise;
         private readonly ILogger<PersonController> _logger = logger;
         private readonly IJwtExtraxtService _jwtExtraxtSerevice = jwtExtraxtSerevice;
-
+        private readonly ILocationAddService _locationAddService = locationAddService;
         [HttpPost("add")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> AddPersonInfoAsync(PersonDto personDto)
+        public async Task<IActionResult> AddLocationAsync([FromBody]LocationDto locationDto)
         {
             try
             {
@@ -31,13 +32,13 @@ namespace CA_Final_Regia.Controllers
                 {
                     return Unauthorized("Token is invalid");
                 }
-                var response = await _personAddInfoServise.AddPersonInfoAsync(personDto, accountId);
+                var response = await _locationAddService.AddLocationAsync(locationDto, accountId);
                 return StatusCode((int)response.StatusCode, response.Message);
             }
             catch (ArgumentException ex)
             {
-                _logger.LogCritical(ex, "An error occurred while adding a new person.");
-                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while adding a new person.");
+                _logger.LogCritical(ex, "An error occurred while adding a new location.");
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while adding a new location.");
             }
         }
     }

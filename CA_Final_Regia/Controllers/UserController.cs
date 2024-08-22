@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CA_Final_Regia.Controllers
 {
-    [Route("api/regia/user")]
+    [Route("regia/user")]
     [ApiController]
     public class UserController(IUserLogInService userLogInService, IUserRegisterService userRegisterService, ILogger<UserController> logger, IJwtTokenService jwtService) : ControllerBase
     {
