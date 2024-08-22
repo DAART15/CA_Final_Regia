@@ -8,7 +8,6 @@ namespace CA_Final_Regia.Services.JwtServices
     public class JwtTokenService(IConfiguration configuration) : IJwtTokenService
     {
         public readonly IConfiguration _configuration = configuration;
-
         public string GenerateToken(string username, string role)
         {
             var key = _configuration["Jwt:Key"];
@@ -29,15 +28,7 @@ namespace CA_Final_Regia.Services.JwtServices
                 expires: DateTime.Now.AddHours(4),
                 signingCredentials: credentials
                 );
-
             return new JwtSecurityTokenHandler().WriteToken(jwt);
-        }
-        public string? ExtractUsernameFromToken(string token)
-        {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var jwtToken = tokenHandler.ReadJwtToken(token);
-            var usernameClaim = jwtToken.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier);
-            return usernameClaim?.Value;
         }
     }
 }

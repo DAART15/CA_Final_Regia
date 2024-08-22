@@ -28,6 +28,9 @@ namespace CA_Final_Regia.Infrastructure.DataBase.Configuration
                 .IsRequired();
             builder.Property(p => p.FileData)
                 .HasColumnType("varbinary(max)");
+            builder.HasOne(p => p.Location)
+                .WithOne(a => a.Person)
+                .HasForeignKey<Location>(p => p.AccountId);
             builder.HasIndex(a => a.AccountId)
                 .IsUnique();
         }

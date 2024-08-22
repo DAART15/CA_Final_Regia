@@ -22,9 +22,6 @@ namespace CA_Final_Regia.Infrastructure.DataBase.Configuration
             builder.Property(l => l.ApartmentNr)
                 .HasMaxLength(4)
                 .IsRequired();
-            builder.HasOne(a => a.Person)
-                .WithOne(p => p.Location)
-                .HasForeignKey<Person>(a => a.AccountId);
             builder.HasIndex(a => a.AccountId)
                 .IsUnique();
         }

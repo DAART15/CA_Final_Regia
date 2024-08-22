@@ -28,12 +28,13 @@ namespace CA_Final_Regia.Services.PersonServices
                     PhoneNumber = personDto.PhoneNumber,
                     Mail = personDto.Mail,
                     FileData = imageBytes,
-                };                var response = await _personRepository.CreatePersonAsync(person);
+                };               
+                var response = await _personRepository.CreatePersonAsync(person);
                 if (response == null)
                 {
                     return new ResponseDto<Person>(false, "Person not added", ResponseDto<Person>.Status.Not_Found);
                 }
-                return new ResponseDto<Person>(true, "Person added", ResponseDto<Person>.Status.Ok);
+                return new ResponseDto<Person>(true, "Person added", ResponseDto<Person>.Status.Created);
             }
             catch (ArgumentException ex)
             {

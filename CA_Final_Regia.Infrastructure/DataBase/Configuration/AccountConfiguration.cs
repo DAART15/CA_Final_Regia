@@ -17,7 +17,6 @@ namespace CA_Final_Regia.Infrastructure.DataBase.Configuration
                 .IsRequired();
             builder.Property(a => a.Role)
                 .IsRequired();
-            
             builder.HasIndex(a => a.UserName)
                 .IsUnique();
             builder.HasIndex(a => a.AccountId)

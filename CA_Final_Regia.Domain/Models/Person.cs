@@ -16,6 +16,6 @@ namespace CA_Final_Regia.Domain.Models
         public string Mail {get; set; }
         public byte[] FileData { get; set; }
         public Account Account { get; set; }
-        public Location Location { get; set; }
+        public Location? Location { get; set; }
     }
 }
