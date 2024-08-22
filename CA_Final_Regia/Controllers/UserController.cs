@@ -1,17 +1,17 @@
 ﻿using CA_Final_Regia.Interfaces;
-using CA_Final_Regia.Services.JwtService;
+using CA_Final_Regia.Services.JwtServices;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CA_Final_Regia.Controllers
 {
     [Route("api/regia/user")]
     [ApiController]
-    public class UserController(IUserLogInService userLogInService, IUserRegisterService userRegisterService, ILogger<UserController> logger, IJwtService jwtService) : ControllerBase
+    public class UserController(IUserLogInService userLogInService, IUserRegisterService userRegisterService, ILogger<UserController> logger, IJwtTokenService jwtService) : ControllerBase
     {
         private readonly IUserLogInService _userLogInService = userLogInService;
         private readonly IUserRegisterService _userRegisterService = userRegisterService;
         private readonly ILogger _logger = logger;
-        private readonly IJwtService _jwtService = jwtService;
+        private readonly IJwtTokenService _jwtService = jwtService;
 
         [HttpPost("register")]
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -32,10 +32,10 @@ namespace CA_Final_Regia.Controllers
             }
         }
         [HttpGet("login")]
-        [ProducesResponseType(StatusCodes.Status200OK , Type = typeof(ActionResult<JwtService>))]
+        [ProducesResponseType(StatusCodes.Status200OK , Type = typeof(ActionResult<JwtTokenService>))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<JwtService>> LogInAsync([FromQuery] string username, string password)
+        public async Task<ActionResult<JwtTokenService>> LogInAsync([FromQuery] string username, string password)
         {
             try
             {

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Identity.Client;
 
 namespace CA_Final_Regia.Controllers
 {
@@ -11,10 +12,11 @@ namespace CA_Final_Regia.Controllers
     [ApiController]
     [Authorize]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "User")]
-    public class PersonController(IPersonAddInfoServise personAddInfoServise, ILogger<PersonController> logger) : ControllerBase
+    public class PersonController(IPersonAddInfoService personAddInfoServise, ILogger<PersonController> logger, IJwtExtraxtService jwtExtraxtSerevice) : ControllerBase
     {
-        private readonly IPersonAddInfoServise _personAddInfoServise = personAddInfoServise;
+        private readonly IPersonAddInfoService _personAddInfoServise = personAddInfoServise;
         private readonly ILogger<PersonController> _logger = logger;
+        private readonly IJwtExtraxtService _jwtExtraxtSerevice = jwtExtraxtSerevice;
 
         [HttpPost("add")]
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -26,22 +28,12 @@ namespace CA_Final_Regia.Controllers
         {
             try
             {
-                string authorizationHeader = Request.Headers["Authorization"];
-                if (string.IsNullOrEmpty(authorizationHeader) || !authorizationHeader.StartsWith("Bearer "))
+                Guid accountId = _jwtExtraxtSerevice.GetAccountIdFromJwtToken(Request.Headers["Authorization"]);
+                if (accountId == Guid.Empty)
                 {
-                    return BadRequest("Invalid Authorization header.");
+                    return Unauthorized("Token is invalid");
                 }
-                string jwtToken = authorizationHeader.Substring("Bearer ".Length).Trim();
-
-
-                /*LocationDto locationDto = new LocationDto
-                {
-                    City = "Miestas",
-                    Street = "Gatve",
-                    HouseNr = "11",
-                    ApartmentNr = "22"
-                };*/
-                var response = await _personAddInfoServise.AddPersonInfoAsync(personDto, jwtToken);
+                var response = await _personAddInfoServise.AddPersonInfoAsync(personDto, accountId);
                 return StatusCode((int)response.StatusCode, response.Message);
             }
             catch (ArgumentException ex)

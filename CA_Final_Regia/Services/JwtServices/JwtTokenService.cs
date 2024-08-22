@@ -3,9 +3,9 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-namespace CA_Final_Regia.Services.JwtService
+namespace CA_Final_Regia.Services.JwtServices
 {
-    public class JwtService(IConfiguration configuration) : IJwtService
+    public class JwtTokenService(IConfiguration configuration) : IJwtTokenService
     {
         public readonly IConfiguration _configuration = configuration;
 

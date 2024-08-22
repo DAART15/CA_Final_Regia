@@ -1,6 +1,6 @@
 using CA_Final_Regia.Infrastructure.Extensions;
 using CA_Final_Regia.Interfaces;
-using CA_Final_Regia.Services.JwtService;
+using CA_Final_Regia.Services.JwtServices;
 using CA_Final_Regia.Services.LocationServices;
 using CA_Final_Regia.Services.PersonServices;
 using CA_Final_Regia.Services.PictureServices;
@@ -91,13 +91,13 @@ namespace CA_Final_Regia
 
 
             // custom services from CA_Final_Regia.Services
-            builder.Services.AddScoped<IJwtService, JwtService>();
+            builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
             builder.Services.AddScoped<IUserRegisterService, UserRegisterService>();
             builder.Services.AddScoped<IUserLogInService, UserLogInService>();
             builder.Services.AddScoped<IPictureResizeService, PictureResizeService>();
-            builder.Services.AddScoped<IPictureToByteService, PictureToByteService>();
-            builder.Services.AddScoped<IPersonAddInfoServise, PersonAddInfoServise>();
+            builder.Services.AddScoped<IPersonAddInfoService, PersonAddInfoService>();
             builder.Services.AddScoped<ILocationAddService, LocationAddService>();
+            builder.Services.AddScoped<IJwtExtraxtService, JwtExtraxtService>();
 
             // from Infrastructure.Extensions
             builder.Services.AddDatabaseServices(builder.Configuration.GetConnectionString("DefaultConnection"));

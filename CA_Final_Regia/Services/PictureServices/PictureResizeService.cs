@@ -25,23 +25,6 @@ namespace CA_Final_Regia.Services.PictureServices
                 throw new ArgumentException(ex.Message);
             }
         }
-        /*public async Task<Image> ResizePictureAsync(PictureDto file)
-        {
-            try
-            {
-                using var stream = new MemoryStream();
-                await file.Image.CopyToAsync(stream);
-                stream.Position = 0;
-                using Bitmap bitmap = new Bitmap(stream);
-                Size thumbnailSize = GetThumbnailSize(bitmap);
-                using var thumbnail = bitmap.GetThumbnailImage(thumbnailSize.Width, thumbnailSize.Height, null, IntPtr.Zero);
-                return thumbnail;
-            }
-            catch (ArgumentException ex)
-            {
-                throw new ArgumentException(ex.Message);
-            }
-        }*/
         private static Size GetThumbnailSize(Bitmap original)
         {
             try

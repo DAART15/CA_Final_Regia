@@ -4,20 +4,15 @@ using CA_Final_Regia.Infrastructure.Interfaces;
 using CA_Final_Regia.Interfaces;
 namespace CA_Final_Regia.Services.PersonServices
 {
-    public class PersonAddInfoServise(IPersonRepository personRepository, IPictureResizeService pictureResizeService, IJwtService jwtService) : IPersonAddInfoServise
+    public class PersonAddInfoService(IPersonRepository personRepository, IPictureResizeService pictureResizeService) : IPersonAddInfoService
     {
         private readonly IPersonRepository _personRepository = personRepository;
         private readonly IPictureResizeService _pictureResizeService = pictureResizeService;
-        private readonly IJwtService _jwtService = jwtService;
-        
-        public async Task<ResponseDto<Person>> AddPersonInfoAsync(PersonDto personDto, string token)
+                
+        public async Task<ResponseDto<Person>> AddPersonInfoAsync(PersonDto personDto, Guid accountId)
         {
             try
             {
-                if (!Guid.TryParse(_jwtService.ExtractUsernameFromToken(token), out Guid accountId))
-                {
-                    return new ResponseDto<Person>(false, "Token is invalid", ResponseDto<Person>.Status.Unauthorized);
-                }
                 if (personDto == null)
                 { 
                     return new ResponseDto<Person>(false, "Person not added", ResponseDto<Person>.Status.Bad_Request); 
