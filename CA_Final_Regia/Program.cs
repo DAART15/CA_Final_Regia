@@ -101,6 +101,8 @@ namespace CA_Final_Regia
             builder.Services.AddScoped<IJwtExtraxtService, JwtExtraxtService>();
             builder.Services.AddScoped<IGetUsersService, GetUsersService>();
             builder.Services.AddScoped<IDeleteUserService, DeleteUserService>();
+            builder.Services.AddScoped<IPersonGetInfoService, PersonGetInfoService>();
+
 
             // from Infrastructure.Extensions
             builder.Services.AddDatabaseServices(builder.Configuration.GetConnectionString("DefaultConnection"));
