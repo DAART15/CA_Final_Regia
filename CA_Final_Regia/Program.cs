@@ -1,5 +1,6 @@
 using CA_Final_Regia.Infrastructure.Extensions;
 using CA_Final_Regia.Interfaces;
+using CA_Final_Regia.Services.AdminServices;
 using CA_Final_Regia.Services.JwtServices;
 using CA_Final_Regia.Services.LocationServices;
 using CA_Final_Regia.Services.PersonServices;
@@ -98,6 +99,8 @@ namespace CA_Final_Regia
             builder.Services.AddScoped<IPersonAddInfoService, PersonAddInfoService>();
             builder.Services.AddScoped<ILocationAddService, LocationAddService>();
             builder.Services.AddScoped<IJwtExtraxtService, JwtExtraxtService>();
+            builder.Services.AddScoped<IGetUsersService, GetUsersService>();
+            builder.Services.AddScoped<IDeleteUserService, DeleteUserService>();
 
             // from Infrastructure.Extensions
             builder.Services.AddDatabaseServices(builder.Configuration.GetConnectionString("DefaultConnection"));

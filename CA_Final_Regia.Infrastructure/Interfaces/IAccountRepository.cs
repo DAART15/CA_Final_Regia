@@ -9,8 +9,10 @@ namespace CA_Final_Regia.Infrastructure.Interfaces
 {
     public interface IAccountRepository
     {
-        Task<Account?> GetAccountAsync(string userName);
+        Task<Account?> GetAccountByUserNameAsync(string userName);
+        Task<Account?> GetAccountByIdAsync(Guid accountId);
         Task<Account> CreateAccountAsync(Account account);
         Task DeleteAccountAsync(Account account);
+        Task<List<Account>> GetAllAccountsAsync();
     }
 }

@@ -17,12 +17,12 @@
             Message = message;
             StatusCode = statusCode;
         }
-        public ResponseDto(bool isSuccess, string message, Status statusCode, string special, string accountId)
+        public ResponseDto(bool isSuccess, string message, Status statusCode, string role, string accountId)
         {
             IsSuccess = isSuccess;
             Message = message;
             StatusCode = statusCode;
-            Role = special;
+            Role = role;
             AccountId = accountId;
         }
 

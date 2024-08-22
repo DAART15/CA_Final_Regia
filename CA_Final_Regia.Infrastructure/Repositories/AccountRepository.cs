@@ -7,12 +7,23 @@ namespace CA_Final_Regia.Infrastructure.Repositories
     public class AccountRepository(AplicationDbContext dbContext) : IAccountRepository
     {
         private readonly AplicationDbContext _dbContext = dbContext;
-        
-        public async Task<Account?> GetAccountAsync(string userName)
+
+        public async Task<Account?> GetAccountByUserNameAsync(string userName)
         {
             try
             {
                 return await _dbContext.Accounts.FirstOrDefaultAsync(a => a.UserName == userName);
+            }
+            catch (ArgumentException ex)
+            {
+                throw new ArgumentException(ex.Message);
+            }
+        }
+        public async Task<Account?> GetAccountByIdAsync(Guid accountId)
+        {
+            try
+            {
+                return await _dbContext.Accounts.FirstOrDefaultAsync(a => a.AccountId == accountId);
             }
             catch (ArgumentException ex)
             {
@@ -38,6 +49,17 @@ namespace CA_Final_Regia.Infrastructure.Repositories
             {
                 _dbContext.Accounts.Remove(account);
                 await _dbContext.SaveChangesAsync();
+            }
+            catch (ArgumentException ex)
+            {
+                throw new ArgumentException(ex.Message);
+            }
+        }
+        public async Task<List<Account>> GetAllAccountsAsync()
+        {
+            try
+            {
+                return await _dbContext.Accounts.ToListAsync();
             }
             catch (ArgumentException ex)
             {

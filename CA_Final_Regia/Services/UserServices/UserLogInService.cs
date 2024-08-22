@@ -15,7 +15,7 @@ namespace CA_Final_Regia.Services.UserServices
         {
             try
             {
-                var acc = await _accountRepository.GetAccountAsync(username);
+                var acc = await _accountRepository.GetAccountByUserNameAsync(username);
                 if (acc == null)
                 {
                     return new ResponseDto<Account>(false, "User not found", ResponseDto<Account>.Status.Not_Found);

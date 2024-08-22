@@ -33,17 +33,5 @@ namespace CA_Final_Regia.Infrastructure.Repositories
                 throw new ArgumentException(ex.Message);
             }
         }
-        public async Task DeletePersonAsync(Person person)
-        {
-            try
-            {
-                _dbContext.Persons.Remove(person);
-                await _dbContext.SaveChangesAsync();
-            }
-            catch (ArgumentException ex)
-            {
-                throw new ArgumentException(ex.Message);
-            }
-        }
     }
 }
