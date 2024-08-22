@@ -11,16 +11,16 @@ namespace CA_Final_Regia.Services.UserServices
     {
         private readonly IAccountRepository _accountRepository = accountRepository;
 
-        public async Task<ResponseDto<Account>> LogInAsync(string username, string password)
+        public async Task<ResponseDto<Account>> LogInAsync(User user)
         {
             try
             {
-                var acc = await _accountRepository.GetAccountByUserNameAsync(username);
+                var acc = await _accountRepository.GetAccountByUserNameAsync(user.UserName);
                 if (acc == null)
                 {
                     return new ResponseDto<Account>(false, "User not found", ResponseDto<Account>.Status.Not_Found);
                 }
-                if (VerifyPasswordHash(password, acc.Password, acc.Salt))
+                if (VerifyPasswordHash(user.Password, acc.Password, acc.Salt))
                 {
                     return new ResponseDto<Account>(true, "Connected successfully", ResponseDto<Account>.Status.Ok, acc.Role, acc.AccountId.ToString());
                 }

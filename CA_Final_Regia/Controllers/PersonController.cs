@@ -23,11 +23,11 @@ namespace CA_Final_Regia.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> AddPersonInfoAsync(PersonDto personDto)
+        public async Task<IActionResult> AddPersonInfoAsync([FromHeader(Name = "Authorization")] string auth,[FromForm] PersonDto personDto)
         {
             try
             {
-                Guid accountId = _jwtExtraxtSerevice.GetAccountIdFromJwtToken(Request.Headers["Authorization"]);
+                Guid accountId = _jwtExtraxtSerevice.GetAccountIdFromJwtToken(auth);
                 if (accountId == Guid.Empty)
                 {
                     return Unauthorized("Token is invalid");

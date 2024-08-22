@@ -13,22 +13,22 @@ namespace CA_Final_Regia.Services.UserServices
     {
         private readonly IAccountRepository _accountRepository = accountRepository;
 
-        public async Task<ResponseDto<Account>> RegisterAsync(string username, string password)
+        public async Task<ResponseDto<Account>> RegisterAsync(User user)
         {
             try
             {
-                if (!Regex.IsMatch(username, @"^[a-zA-Z0-9_]{6,12}$"))
+                if (!Regex.IsMatch(user.UserName, @"^[a-zA-Z0-9_]{6,12}$"))
                 {
                     return new ResponseDto<Account>(false, "Nickname is not valid. Requaements: at least 6 characters, at most 12 characters only letters (both uppercase and lowercase), digits, and underscores", ResponseDto<Account>.Status.Bad_Request);
                 }
-                if (!Regex.IsMatch(password, @"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)[\w\W]{8,}$"))
+                if (!Regex.IsMatch(user.Password, @"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)[\w\W]{8,}$"))
                 {
                     return new ResponseDto<Account>(false, "Password is not valid. Requaements: at least one digit, one lowercase letter, one uppercase letter, one special character, at least 8 characters", ResponseDto<Account>.Status.Bad_Request);
                 }
-                CreatePasswordHash(password, out byte[] passwordHash, out byte[] passwordSalt);
+                CreatePasswordHash(user.Password, out byte[] passwordHash, out byte[] passwordSalt);
                 Account account = new Account
                 {
-                    UserName = username,
+                    UserName = user.UserName,
                     Password = passwordHash,
                     Salt = passwordSalt,
                     Role = "User"

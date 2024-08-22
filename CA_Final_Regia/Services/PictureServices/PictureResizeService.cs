@@ -32,11 +32,19 @@ namespace CA_Final_Regia.Services.PictureServices
                 const int maxPixels = 200;
                 int originalWidth = original.Width;
                 int originalHeight = original.Height;
+                double factor;
                 if (originalWidth <= maxPixels && originalHeight <= maxPixels)
                 {
-                    return new Size(originalWidth, originalHeight);
+                    if(originalWidth > originalHeight)
+                    {
+                        factor = (double)maxPixels / originalWidth;
+                    }
+                    else
+                    {
+                        factor = (double)maxPixels / originalHeight;
+                    }
+                    return new Size((int)(originalWidth * factor), (int)(originalHeight * factor));
                 }
-                double factor;
                 if (originalWidth > originalHeight)
                 {
                     factor = (double)maxPixels / originalWidth;

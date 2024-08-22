@@ -22,11 +22,11 @@ namespace CA_Final_Regia.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> AddLocationAsync([FromBody]LocationDto locationDto)
+        public async Task<IActionResult> AddLocationAsync([FromHeader(Name = "Authorization")] string auth, [FromBody]LocationDto locationDto)
         {
             try
             {
-                Guid accountId = _jwtExtraxtSerevice.GetAccountIdFromJwtToken(Request.Headers["Authorization"]);
+                Guid accountId = _jwtExtraxtSerevice.GetAccountIdFromJwtToken(auth);
                 if (accountId == Guid.Empty)
                 {
                     return Unauthorized("Token is invalid");

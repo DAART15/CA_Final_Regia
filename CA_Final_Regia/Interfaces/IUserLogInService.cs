@@ -5,6 +5,6 @@ namespace CA_Final_Regia.Interfaces
 {
     public interface IUserLogInService
     {
-        Task<ResponseDto<Account>> LogInAsync(string username, string password);
+        Task<ResponseDto<Account>> LogInAsync(User user);
     }
 }

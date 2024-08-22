@@ -1,4 +1,5 @@
-﻿using CA_Final_Regia.Interfaces;
+﻿using CA_Final_Regia.Domain.Models;
+using CA_Final_Regia.Interfaces;
 using CA_Final_Regia.Services.JwtServices;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,11 +19,11 @@ namespace CA_Final_Regia.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Register([FromQuery]string username, string password)
+        public async Task<IActionResult> Register(User user)
         {
             try
             {
-                var response = await _userRegisterService.RegisterAsync(username, password);
+                var response = await _userRegisterService.RegisterAsync(user);
                 return StatusCode((int)response.StatusCode, response.Message);
             }
             catch (ArgumentException ex)
@@ -31,15 +32,15 @@ namespace CA_Final_Regia.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while registering a new user.");
             }
         }
-        [HttpGet("login")]
-        [ProducesResponseType(StatusCodes.Status200OK , Type = typeof(ActionResult<JwtTokenService>))]
+        [HttpPost("login")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ActionResult<JwtTokenService>))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<JwtTokenService>> LogInAsync([FromQuery] string username, string password)
+        public async Task<ActionResult<JwtTokenService>> LogInAsync(User user)
         {
             try
             {
-                var response = await _userLogInService.LogInAsync(username, password);
+                var response = await _userLogInService.LogInAsync(user);
                 if (!response.IsSuccess)
                 {
                     return StatusCode((int)response.StatusCode, response.Message);

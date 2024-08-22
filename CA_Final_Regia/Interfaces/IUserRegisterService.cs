@@ -5,6 +5,6 @@ namespace CA_Final_Regia.Interfaces
 {
     public interface IUserRegisterService
     {
-        Task<ResponseDto<Account>> RegisterAsync(string username, string password);
+        Task<ResponseDto<Account>> RegisterAsync(User user);
     }
 }
