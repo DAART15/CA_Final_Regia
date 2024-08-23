@@ -5,6 +5,6 @@ namespace CA_Final_Regia.Interfaces
 {
     public interface ILocationGetService
     {
-        Task<ResponseDto<Location>> GetLocationAsync(Guid accountId);
+        Task<ResponseDto<LocationDto>> GetLocationAsync(Guid accountId);
     }
 }

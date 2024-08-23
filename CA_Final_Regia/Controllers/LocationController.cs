@@ -43,13 +43,13 @@ namespace CA_Final_Regia.Controllers
             }
         }
         [HttpGet("get")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ActionResult<Location>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ActionResult<LocationDto>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<Location>> GetLocationAsync([FromHeader(Name = "Authorization")] string auth)
+        public async Task<ActionResult<LocationDto>> GetLocationAsync([FromHeader(Name = "Authorization")] string auth)
         {
             try
             {
