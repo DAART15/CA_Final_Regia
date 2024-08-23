@@ -2,7 +2,6 @@
 using CA_Final_Regia.DTOs;
 using CA_Final_Regia.Infrastructure.Interfaces;
 using CA_Final_Regia.Interfaces;
-using Microsoft.AspNetCore.Http;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;

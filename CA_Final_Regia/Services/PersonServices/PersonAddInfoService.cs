@@ -2,6 +2,7 @@
 using CA_Final_Regia.DTOs;
 using CA_Final_Regia.Infrastructure.Interfaces;
 using CA_Final_Regia.Interfaces;
+using CA_Final_Regia.Properties.ActionFilters;
 namespace CA_Final_Regia.Services.PersonServices
 {
     public class PersonAddInfoService(IPersonRepository personRepository, IPictureResizeService pictureResizeService) : IPersonAddInfoService
@@ -13,9 +14,10 @@ namespace CA_Final_Regia.Services.PersonServices
         {
             try
             {
-                if (personPostDto == null)
-                { 
-                    return new ResponseDto<PersonPostDto>(false, "Person not added", ResponseDto<PersonPostDto>.Status.Bad_Request); 
+                var validation = personPostDto.ValidatePersonInfo();
+                if (!validation.IsSuccess)
+                {
+                    return new ResponseDto<PersonPostDto>(false, validation.Message, ResponseDto<PersonPostDto>.Status.Bad_Request);
                 }
                 PictureDto picture = new PictureDto { Image = personPostDto.Image };
                 var imageBytes = await _pictureResizeService.ResizePictureAsync(picture);
