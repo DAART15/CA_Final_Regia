@@ -2,6 +2,7 @@
 using CA_Final_Regia.DTOs;
 using CA_Final_Regia.Infrastructure.Interfaces;
 using CA_Final_Regia.Interfaces;
+using CA_Final_Regia.Properties.ActionFilters;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -12,17 +13,14 @@ namespace CA_Final_Regia.Services.UserServices
     {
         private readonly IAccountRepository _accountRepository = accountRepository;
 
-        public async Task<ResponseDto<Account>> RegisterAsync(User user)
+        public async Task<ResponseDto<User>> RegisterAsync(User user)
         {
             try
             {
-                if (!Regex.IsMatch(user.UserName, @"^[a-zA-Z0-9_]{6,12}$"))
+                var userValidation = user.ValidateUserRegister();
+                if (!userValidation.IsSuccess)
                 {
-                    return new ResponseDto<Account>(false, "Nickname is not valid. Requaements: at least 6 characters, at most 12 characters only letters (both uppercase and lowercase), digits, and underscores", ResponseDto<Account>.Status.Bad_Request);
-                }
-                if (!Regex.IsMatch(user.Password, @"^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)[\w\W]{8,}$"))
-                {
-                    return new ResponseDto<Account>(false, "Password is not valid. Requaements: at least one digit, one lowercase letter, one uppercase letter, one special character, at least 8 characters", ResponseDto<Account>.Status.Bad_Request);
+                    return new ResponseDto<User>(false, userValidation.Message, ResponseDto<User>.Status.Bad_Request);
                 }
                 CreatePasswordHash(user.Password, out byte[] passwordHash, out byte[] passwordSalt);
                 Account account = new Account
@@ -35,9 +33,9 @@ namespace CA_Final_Regia.Services.UserServices
                 var acc = await _accountRepository.CreateAccountAsync(account);
                 if (acc == null)
                 {
-                    return new ResponseDto<Account>(false, "Somemeting went wrong. try again", ResponseDto<Account>.Status.Not_Found);
+                    return new ResponseDto<User>(false, "Somemeting went wrong. try again", ResponseDto<User>.Status.Not_Found);
                 }
-                return new ResponseDto<Account>(true, "Account for User created successfully", ResponseDto<Account>.Status.Created);
+                return new ResponseDto<User>(true, "Account for User created successfully", ResponseDto<User>.Status.Created);
             }
             catch (ArgumentException ex)
             {
