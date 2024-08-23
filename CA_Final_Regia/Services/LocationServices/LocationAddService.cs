@@ -2,6 +2,7 @@
 using CA_Final_Regia.Infrastructure.Interfaces;
 using CA_Final_Regia.Domain.Models;
 using CA_Final_Regia.DTOs;
+using CA_Final_Regia.Properties.ActionFilters;
 namespace CA_Final_Regia.Services.LocationServices
 {
     public class LocationAddService(ILocationRepository locationRepository) : ILocationAddService
@@ -11,9 +12,10 @@ namespace CA_Final_Regia.Services.LocationServices
         {
             try
             {
-                if (locationDto == null)
+                var validation = locationDto.ValidateLocationDto();
+                if (!validation.IsSuccess)
                 {
-                    return new ResponseDto<Location>(false, "Location not added", ResponseDto<Location>.Status.Bad_Request);
+                    return new ResponseDto<Location>(false, validation.Message, ResponseDto<Location>.Status.Bad_Request);
                 }
                 Location location = new Location
                 {

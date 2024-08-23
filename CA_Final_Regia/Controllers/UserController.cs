@@ -1,4 +1,4 @@
-﻿using CA_Final_Regia.Domain.Models;
+﻿using CA_Final_Regia.DTOs;
 using CA_Final_Regia.Interfaces;
 using CA_Final_Regia.Services.JwtServices;
 using Microsoft.AspNetCore.Mvc;
@@ -46,7 +46,6 @@ namespace CA_Final_Regia.Controllers
                     return StatusCode((int)response.StatusCode, response.Message);
                 }
                 return Ok(_jwtService.GenerateToken(response.AccountId, response.Role));
-
             }
             catch (ArgumentException ex)
             {

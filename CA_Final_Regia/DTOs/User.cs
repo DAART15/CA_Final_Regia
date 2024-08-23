@@ -1,4 +1,4 @@
-﻿namespace CA_Final_Regia.Domain.Models
+﻿namespace CA_Final_Regia.DTOs
 {
     public class User
     {

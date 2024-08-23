@@ -1,6 +1,4 @@
-﻿using CA_Final_Regia.Domain.Models;
-using CA_Final_Regia.DTOs;
-using System.Collections.Generic;
+﻿using CA_Final_Regia.DTOs;
 using System.Text.RegularExpressions;
 
 namespace CA_Final_Regia.Properties.ActionFilters

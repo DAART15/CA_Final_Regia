@@ -5,7 +5,6 @@ using CA_Final_Regia.Interfaces;
 using CA_Final_Regia.Properties.ActionFilters;
 using System.Security.Cryptography;
 using System.Text;
-using System.Text.RegularExpressions;
 
 namespace CA_Final_Regia.Services.UserServices
 {
@@ -17,10 +16,10 @@ namespace CA_Final_Regia.Services.UserServices
         {
             try
             {
-                var userValidation = user.ValidateUserRegister();
-                if (!userValidation.IsSuccess)
+                var validation = user.ValidateUserRegister();
+                if (!validation.IsSuccess)
                 {
-                    return new ResponseDto<User>(false, userValidation.Message, ResponseDto<User>.Status.Bad_Request);
+                    return new ResponseDto<User>(false, validation.Message, ResponseDto<User>.Status.Bad_Request);
                 }
                 CreatePasswordHash(user.Password, out byte[] passwordHash, out byte[] passwordSalt);
                 Account account = new Account
