@@ -5,6 +5,6 @@ namespace CA_Final_Regia.Interfaces
 {
     public interface IPersonGetInfoService
     {
-        Task<ResponseDto<Person>> GetPersonInfoAsync(Guid accountId);
+        Task<ResponseDto<PersonGetDto>> GetPersonInfoAsync(Guid accountId);
     }
 }

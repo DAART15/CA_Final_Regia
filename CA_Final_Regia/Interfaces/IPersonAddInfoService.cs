@@ -4,6 +4,6 @@ namespace CA_Final_Regia.Interfaces
 {
     public interface IPersonAddInfoService
     {
-        Task<ResponseDto<Person>> AddPersonInfoAsync(PersonDto personDto, Guid accountId);
+        Task<ResponseDto<PersonPostDto>> AddPersonInfoAsync(PersonPostDto personDto, Guid accountId);
     }
 }

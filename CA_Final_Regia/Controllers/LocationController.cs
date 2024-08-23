@@ -1,5 +1,4 @@
-﻿using CA_Final_Regia.Domain.Models;
-using CA_Final_Regia.DTOs;
+﻿using CA_Final_Regia.DTOs;
 using CA_Final_Regia.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;

@@ -9,32 +9,32 @@ namespace CA_Final_Regia.Services.PersonServices
         private readonly IPersonRepository _personRepository = personRepository;
         private readonly IPictureResizeService _pictureResizeService = pictureResizeService;
                 
-        public async Task<ResponseDto<Person>> AddPersonInfoAsync(PersonDto personDto, Guid accountId)
+        public async Task<ResponseDto<PersonPostDto>> AddPersonInfoAsync(PersonPostDto personPostDto, Guid accountId)
         {
             try
             {
-                if (personDto == null)
+                if (personPostDto == null)
                 { 
-                    return new ResponseDto<Person>(false, "Person not added", ResponseDto<Person>.Status.Bad_Request); 
+                    return new ResponseDto<PersonPostDto>(false, "Person not added", ResponseDto<PersonPostDto>.Status.Bad_Request); 
                 }
-                PictureDto picture = new PictureDto { Image = personDto.Image };
+                PictureDto picture = new PictureDto { Image = personPostDto.Image };
                 var imageBytes = await _pictureResizeService.ResizePictureAsync(picture);
                 Person person = new Person
                 {
                     AccountId = accountId,
-                    FirstName = personDto.FirstName,
-                    LastName = personDto.LastName,
-                    PersonalId = personDto.PersonalId,
-                    PhoneNumber = personDto.PhoneNumber,
-                    Mail = personDto.Mail,
+                    FirstName = personPostDto.FirstName,
+                    LastName = personPostDto.LastName,
+                    PersonalId = personPostDto.PersonalId,
+                    PhoneNumber = personPostDto.PhoneNumber,
+                    Mail = personPostDto.Mail,
                     FileData = imageBytes,
                 };               
                 var response = await _personRepository.CreatePersonAsync(person);
                 if (response == null)
                 {
-                    return new ResponseDto<Person>(false, "Person not added", ResponseDto<Person>.Status.Not_Found);
+                    return new ResponseDto<PersonPostDto>(false, "Person not added", ResponseDto<PersonPostDto>.Status.Not_Found);
                 }
-                return new ResponseDto<Person>(true, "Person added", ResponseDto<Person>.Status.Created);
+                return new ResponseDto<PersonPostDto>(true, "Person added", ResponseDto<PersonPostDto>.Status.Created);
             }
             catch (ArgumentException ex)
             {
