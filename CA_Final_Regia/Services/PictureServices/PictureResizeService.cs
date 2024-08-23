@@ -33,18 +33,6 @@ namespace CA_Final_Regia.Services.PictureServices
                 int originalWidth = original.Width;
                 int originalHeight = original.Height;
                 double factor;
-                if (originalWidth <= maxPixels && originalHeight <= maxPixels)
-                {
-                    if(originalWidth > originalHeight)
-                    {
-                        factor = (double)maxPixels / originalWidth;
-                    }
-                    else
-                    {
-                        factor = (double)maxPixels / originalHeight;
-                    }
-                    return new Size((int)(originalWidth * factor), (int)(originalHeight * factor));
-                }
                 if (originalWidth > originalHeight)
                 {
                     factor = (double)maxPixels / originalWidth;
