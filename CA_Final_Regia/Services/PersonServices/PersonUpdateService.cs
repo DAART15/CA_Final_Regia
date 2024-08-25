@@ -37,36 +37,43 @@ namespace CA_Final_Regia.Services.PersonServices
 
         private async Task<ResponseDto<Person>> SwichPersonKeyValue(KeyValue personUpdateKeyValue, Person person)
         {
-            string valueAsString = personUpdateKeyValue.Value.ToString();
-            switch (personUpdateKeyValue.Key)
+            try
             {
-                case "FirstName":
-                    person.FirstName = valueAsString;
-                    break;
-                case "LastName":
-                    person.LastName = valueAsString;
-                    break;
-                case "PersonalId":
-                    person.PersonalId = Convert.ToInt64(personUpdateKeyValue.Value);
-                    break;
-                case "PhoneNumber":
-                    person.PhoneNumber = valueAsString;
-                    break;
-                case "Mail":
-                    person.Mail = valueAsString;
-                    break;
-                case "Image":
-                    person.FileData = await pictureResizeService.ResizePictureAsync((PictureDto)personUpdateKeyValue.Value);
-                    break;
-                default:
-                    return new ResponseDto<Person>(false, "Bad Key", ResponseDto<Person>.Status.Bad_Request);
+                string valueAsString = personUpdateKeyValue.Value.ToString();
+                switch (personUpdateKeyValue.Key)
+                {
+                    case "FirstName":
+                        person.FirstName = valueAsString;
+                        break;
+                    case "LastName":
+                        person.LastName = valueAsString;
+                        break;
+                    case "PersonalId":
+                        person.PersonalId = Convert.ToInt64(personUpdateKeyValue.Value);
+                        break;
+                    case "PhoneNumber":
+                        person.PhoneNumber = valueAsString;
+                        break;
+                    case "Mail":
+                        person.Mail = valueAsString;
+                        break;
+                    case "Image":
+                        person.FileData = await pictureResizeService.ResizePictureAsync((PictureDto)personUpdateKeyValue.Value);
+                        break;
+                    default:
+                        return new ResponseDto<Person>(false, "Bad Key", ResponseDto<Person>.Status.Bad_Request);
+                }
+                var response = await personRepository.UpdatePersonAsync(person);
+                if (response == null)
+                {
+                    return new ResponseDto<Person>(false, "Person not updated", ResponseDto<Person>.Status.Internal_Server_Error);
+                }
+                return new ResponseDto<Person>(true, "Person updated", ResponseDto<Person>.Status.Created);
             }
-            var response = await personRepository.UpdatePersonAsync(person);
-            if (response == null)
+            catch (ArgumentException ex)
             {
-                return new ResponseDto<Person>(false, "Person not updated", ResponseDto<Person>.Status.Internal_Server_Error);
+                throw new ArgumentException(ex.Message);
             }
-            return new ResponseDto<Person>(true, "Person updated", ResponseDto<Person>.Status.Created);
         }
     }
 }

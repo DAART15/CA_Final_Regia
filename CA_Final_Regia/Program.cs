@@ -106,6 +106,7 @@ namespace CA_Final_Regia
             builder.Services.AddScoped<ILocationGetService, LocationGetService>();
             builder.Services.AddScoped<IPersonUpdateService, PersonUpdateService>();
             builder.Services.AddScoped(typeof(IDtoValidation<>), typeof(DtoValidation<>));
+            builder.Services.AddScoped<ILocationUpdateService, LocationUpdateService>();
 
 
             // from Infrastructure.Extensions

@@ -10,7 +10,7 @@ namespace CA_Final_Regia.Controllers
     [ApiController]
     [Authorize]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "User")]
-    public class LocationController(ILogger<PersonController> logger, IJwtExtraxtService jwtExtraxtSerevice, ILocationAddService locationAddService, ILocationGetService locationGetService) : ControllerBase
+    public class LocationController(ILogger<PersonController> logger, IJwtExtraxtService jwtExtraxtSerevice, ILocationAddService locationAddService, ILocationGetService locationGetService, ILocationUpdateService locationUpdateService) : ControllerBase
     {
         [HttpPost("add")]
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -66,5 +66,106 @@ namespace CA_Final_Regia.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while getting location.");
             }
         }
+        [HttpPut("update/city")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> UpdateCityAsync([FromHeader(Name = "Authorization")] string auth, [FromForm] KeyValue personUpdateKeyValue)
+        {
+            try
+            {
+                Guid accountId = jwtExtraxtSerevice.GetAccountIdFromJwtToken(auth);
+                if (accountId == Guid.Empty)
+                {
+                    return Unauthorized("Token is invalid");
+                }
+                var response = await locationUpdateService.UpdateLocationAsync(personUpdateKeyValue, accountId);
+                return StatusCode((int)response.StatusCode, response.Message);
+            }
+            catch (ArgumentException ex)
+            {
+                logger.LogCritical(ex, "An error occurred while updating location city.");
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while updating location city.");
+            }
+        }
+        [HttpPut("update/street")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> UpdateStreetAsync([FromHeader(Name = "Authorization")] string auth, [FromForm] KeyValue personUpdateKeyValue)
+        {
+            try
+            {
+                Guid accountId = jwtExtraxtSerevice.GetAccountIdFromJwtToken(auth);
+                if (accountId == Guid.Empty)
+                {
+                    return Unauthorized("Token is invalid");
+                }
+                var response = await locationUpdateService.UpdateLocationAsync(personUpdateKeyValue, accountId);
+                return StatusCode((int)response.StatusCode, response.Message);
+            }
+            catch (ArgumentException ex)
+            {
+                logger.LogCritical(ex, "An error occurred while updating location street.");
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while updating location street.");
+            }
+        }
+        [HttpPut("update/housenr")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> UpdateHouseNrAsync([FromHeader(Name = "Authorization")] string auth, [FromForm] KeyValue personUpdateKeyValue)
+        {
+            try
+            {
+                Guid accountId = jwtExtraxtSerevice.GetAccountIdFromJwtToken(auth);
+                if (accountId == Guid.Empty)
+                {
+                    return Unauthorized("Token is invalid");
+                }
+                var response = await locationUpdateService.UpdateLocationAsync(personUpdateKeyValue, accountId);
+                return StatusCode((int)response.StatusCode, response.Message);
+            }
+            catch (ArgumentException ex)
+            {
+                logger.LogCritical(ex, "An error occurred while updating location House Nr.");
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while updating location House Nr.");
+            }
+        }
+        [HttpPut("update/apartmentnr")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> UpdateApartmentNrAsync([FromHeader(Name = "Authorization")] string auth, [FromForm] KeyValue personUpdateKeyValue)
+        {
+            try
+            {
+                Guid accountId = jwtExtraxtSerevice.GetAccountIdFromJwtToken(auth);
+                if (accountId == Guid.Empty)
+                {
+                    return Unauthorized("Token is invalid");
+                }
+                var response = await locationUpdateService.UpdateLocationAsync(personUpdateKeyValue, accountId);
+                return StatusCode((int)response.StatusCode, response.Message);
+            }
+            catch (ArgumentException ex)
+            {
+                logger.LogCritical(ex, "An error occurred while updating location Apartment Nr.");
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while updating location Apartment Nr.");
+            }
+        }
     }
 }
+

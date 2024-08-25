@@ -5,18 +5,19 @@ namespace CA_Final_Regia.Properties.ActionFilters
 {
     public static partial class DtoKeyValueValidationExtension
     {
-        //PersonPostDto properties
+        // PersonPostDto properties as KeyValue Key
         private const string FirstName = "FirstName";
         private const string LastName = "LastName";
         private const string PersonalId = "PersonalId";
         private const string PhoneNumber = "PhoneNumber";
         private const string Mail = "Mail";
         private const string Image = "Image";
+        // PersonPostDto properties as KeyValue Value
         private const string PersonalIdRegex = @"^[0-9]{11}$";
         private const string PhoneNumberRegex = @"^[0-9]{5,15}$";
         private const string EmailRegex = @"^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
         private const string ImageExtension = ".jpg";
-        //LocationDto properties
+        // LocationDto properties as KeyValue Key
         private const string City = "City";
         private const string Street = "Street";
         private const string HouseNr = "HouseNr";
@@ -24,6 +25,8 @@ namespace CA_Final_Regia.Properties.ActionFilters
 
         public static ResponseDto<T> ValidateKeyValue<T>(this KeyValue keyValue) where T : class
         {
+            string valueAsString = keyValue.Value.ToString();
+
             if (keyValue == null)
             {
                 return new ResponseDto<T>(false, "Object is null", ResponseDto<T>.Status.Bad_Request);
@@ -36,7 +39,6 @@ namespace CA_Final_Regia.Properties.ActionFilters
             {
                 return new ResponseDto<T>(false, "Value is required", ResponseDto<T>.Status.Bad_Request);
             }
-            string valueAsString = keyValue.Value.ToString();
             switch (keyValue.Key)
             {
                 case FirstName:
