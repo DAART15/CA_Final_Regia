@@ -6,12 +6,11 @@ namespace CA_Final_Regia.Services.LocationServices
 {
     public class LocationGetService(ILocationRepository locationRepository) : ILocationGetService
     {
-        private readonly ILocationRepository _locationRepository = locationRepository;
         public async Task<ResponseDto<LocationDto>> GetLocationAsync(Guid accountId)
         {
             try
             {
-                var location = await _locationRepository.GetLocationAsync(accountId);
+                var location = await locationRepository.GetLocationAsync(accountId);
                 if (location == null)
                 {
                     return new ResponseDto<LocationDto>(false, "Location not found.", ResponseDto<LocationDto>.Status.Not_Found);

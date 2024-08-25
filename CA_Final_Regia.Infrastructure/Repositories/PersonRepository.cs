@@ -33,5 +33,18 @@ namespace CA_Final_Regia.Infrastructure.Repositories
                 throw new ArgumentException(ex.Message);
             }
         }
+        public async Task<Person> UpdatePersonAsync(Person person)
+        {
+            try
+            {
+                _dbContext.Persons.Update(person);
+                await _dbContext.SaveChangesAsync();
+                return person;
+            }
+            catch (ArgumentException ex)
+            {
+                throw new ArgumentException(ex.Message);
+            }
+        }
     }
 }

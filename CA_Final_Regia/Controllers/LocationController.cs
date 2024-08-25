@@ -12,10 +12,6 @@ namespace CA_Final_Regia.Controllers
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "User")]
     public class LocationController(ILogger<PersonController> logger, IJwtExtraxtService jwtExtraxtSerevice, ILocationAddService locationAddService, ILocationGetService locationGetService) : ControllerBase
     {
-        private readonly ILogger<PersonController> _logger = logger;
-        private readonly IJwtExtraxtService _jwtExtraxtSerevice = jwtExtraxtSerevice;
-        private readonly ILocationAddService _locationAddService = locationAddService;
-        private readonly ILocationGetService _locationGetService = locationGetService;
         [HttpPost("add")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -27,17 +23,17 @@ namespace CA_Final_Regia.Controllers
         {
             try
             {
-                Guid accountId = _jwtExtraxtSerevice.GetAccountIdFromJwtToken(auth);
+                Guid accountId = jwtExtraxtSerevice.GetAccountIdFromJwtToken(auth);
                 if (accountId == Guid.Empty)
                 {
                     return Unauthorized("Token is invalid");
                 }
-                var response = await _locationAddService.AddLocationAsync(locationDto, accountId);
+                var response = await locationAddService.AddLocationAsync(locationDto, accountId);
                 return StatusCode((int)response.StatusCode, response.Message);
             }
             catch (ArgumentException ex)
             {
-                _logger.LogCritical(ex, "An error occurred while adding a new location.");
+                logger.LogCritical(ex, "An error occurred while adding a new location.");
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while adding a new location.");
             }
         }
@@ -52,12 +48,12 @@ namespace CA_Final_Regia.Controllers
         {
             try
             {
-                Guid accountId = _jwtExtraxtSerevice.GetAccountIdFromJwtToken(auth);
+                Guid accountId = jwtExtraxtSerevice.GetAccountIdFromJwtToken(auth);
                 if (accountId == Guid.Empty)
                 {
                     return Unauthorized("Token is invalid");
                 }
-                var response = await _locationGetService.GetLocationAsync(accountId);
+                var response = await locationGetService.GetLocationAsync(accountId);
                 if (!response.IsSuccess)
                 {
                     return StatusCode((int)response.StatusCode, response.Message);
@@ -66,7 +62,7 @@ namespace CA_Final_Regia.Controllers
             }
             catch (ArgumentException ex)
             {
-                _logger.LogCritical(ex, "An error occurred while getting location.");
+                logger.LogCritical(ex, "An error occurred while getting location.");
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while getting location.");
             }
         }

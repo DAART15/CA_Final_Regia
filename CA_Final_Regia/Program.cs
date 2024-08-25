@@ -6,6 +6,7 @@ using CA_Final_Regia.Services.LocationServices;
 using CA_Final_Regia.Services.PersonServices;
 using CA_Final_Regia.Services.PictureServices;
 using CA_Final_Regia.Services.UserServices;
+using CA_Final_Regia.Services.ValidationService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -103,6 +104,8 @@ namespace CA_Final_Regia
             builder.Services.AddScoped<IDeleteUserService, DeleteUserService>();
             builder.Services.AddScoped<IPersonGetInfoService, PersonGetInfoService>();
             builder.Services.AddScoped<ILocationGetService, LocationGetService>();
+            builder.Services.AddScoped<IPersonUpdateService, PersonUpdateService>();
+            builder.Services.AddScoped(typeof(IDtoValidation<>), typeof(DtoValidation<>));
 
 
             // from Infrastructure.Extensions

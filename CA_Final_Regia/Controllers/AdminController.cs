@@ -12,9 +12,6 @@ namespace CA_Final_Regia.Controllers
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
     public class AdminController(IGetUsersService getUsersService, ILogger<AdminController> logger, IDeleteUserService deleteUserService) : ControllerBase
     {
-        private readonly IGetUsersService _getUsersService = getUsersService;
-        private readonly ILogger<AdminController> _logger = logger;
-        private readonly IDeleteUserService _deleteUserService = deleteUserService;
         [HttpGet("users")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ActionResult<IList<AccountDto>>))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -25,7 +22,7 @@ namespace CA_Final_Regia.Controllers
         {
             try
             {
-                var response = await _getUsersService.GetUsersAsync();
+                var response = await getUsersService.GetUsersAsync();
                 if (!response.IsSuccess)
                 {
                     return StatusCode((int)response.StatusCode, response.Message);
@@ -35,7 +32,7 @@ namespace CA_Final_Regia.Controllers
             }
             catch (ArgumentException ex)
             {
-                _logger.LogCritical(ex, "An error occurred while getting users.");
+                logger.LogCritical(ex, "An error occurred while getting users.");
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while getting users.");
             }
         }
@@ -50,12 +47,12 @@ namespace CA_Final_Regia.Controllers
         {
             try
             {
-                var response = await _deleteUserService.DeleteUserAsync(accountId);
+                var response = await deleteUserService.DeleteUserAsync(accountId);
                 return StatusCode((int)response.StatusCode, response.Message);
             }
             catch (ArgumentException ex)
             {
-                _logger.LogCritical(ex, "An error occurred while deleting a user.");
+                logger.LogCritical(ex, "An error occurred while deleting a user.");
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while deleting a user.");
             }
         }

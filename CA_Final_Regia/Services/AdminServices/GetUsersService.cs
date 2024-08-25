@@ -5,11 +5,9 @@ namespace CA_Final_Regia.Services.AdminServices
 {
     public class GetUsersService(IAccountRepository accountRepository) : IGetUsersService
     {
-        private readonly IAccountRepository _accountRepository = accountRepository;
-
         public async Task<ResponseDto<AccountDto>> GetUsersAsync()
         {
-            var accounts = await _accountRepository.GetAllAccountsAsync();
+            var accounts = await accountRepository.GetAllAccountsAsync();
             if (!accounts.Any())
             {
                 return new ResponseDto<AccountDto>(false, "No acconts found", ResponseDto<AccountDto>.Status.Not_Found);

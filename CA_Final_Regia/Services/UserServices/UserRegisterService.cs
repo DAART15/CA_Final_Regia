@@ -10,8 +10,6 @@ namespace CA_Final_Regia.Services.UserServices
 {
     public class UserRegisterService(IAccountRepository accountRepository) : IUserRegisterService
     {
-        private readonly IAccountRepository _accountRepository = accountRepository;
-
         public async Task<ResponseDto<User>> RegisterAsync(User user)
         {
             try
@@ -29,7 +27,7 @@ namespace CA_Final_Regia.Services.UserServices
                     Salt = passwordSalt,
                     Role = "User"
                 };
-                var acc = await _accountRepository.CreateAccountAsync(account);
+                var acc = await accountRepository.CreateAccountAsync(account);
                 if (acc == null)
                 {
                     return new ResponseDto<User>(false, "Somemeting went wrong. try again", ResponseDto<User>.Status.Not_Found);

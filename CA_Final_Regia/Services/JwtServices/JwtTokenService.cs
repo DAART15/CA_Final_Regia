@@ -7,10 +7,9 @@ namespace CA_Final_Regia.Services.JwtServices
 {
     public class JwtTokenService(IConfiguration configuration) : IJwtTokenService
     {
-        public readonly IConfiguration _configuration = configuration;
         public string GenerateToken(string username, string role)
         {
-            var key = _configuration["Jwt:Key"];
+            var key = configuration["Jwt:Key"];
             var secret = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
             var credentials = new SigningCredentials(secret, SecurityAlgorithms.HmacSha512Signature);
 
@@ -22,8 +21,8 @@ namespace CA_Final_Regia.Services.JwtServices
             };
 
             var jwt = new JwtSecurityToken(
-                issuer: _configuration["Jwt:Issuer"],
-                audience: _configuration["Jwt:Audience"],
+                issuer: configuration["Jwt:Issuer"],
+                audience: configuration["Jwt:Audience"],
                 claims: claims,
                 expires: DateTime.Now.AddHours(4),
                 signingCredentials: credentials

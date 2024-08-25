@@ -31,5 +31,18 @@ namespace CA_Final_Regia.Infrastructure.Repositories
                 throw new ArgumentException(ex.Message);
             }
         }
+        public async Task<Location> UpdateLocationAsync(Location location)
+        {
+            try
+            {
+                _dbContext.Locations.Update(location);
+                await _dbContext.SaveChangesAsync();
+                return location;
+            }
+            catch (ArgumentException ex)
+            {
+                throw new ArgumentException(ex.Message);
+            }
+        }
     }
 }

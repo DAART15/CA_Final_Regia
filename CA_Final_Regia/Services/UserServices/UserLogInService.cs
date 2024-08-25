@@ -9,13 +9,11 @@ namespace CA_Final_Regia.Services.UserServices
 {
     public class UserLogInService(IAccountRepository accountRepository) : IUserLogInService
     {
-        private readonly IAccountRepository _accountRepository = accountRepository;
-
         public async Task<ResponseDto<Account>> LogInAsync(User user)
         {
             try
             {
-                var acc = await _accountRepository.GetAccountByUserNameAsync(user.UserName);
+                var acc = await accountRepository.GetAccountByUserNameAsync(user.UserName);
                 if (acc == null)
                 {
                     return new ResponseDto<Account>(false, "User not found", ResponseDto<Account>.Status.Not_Found);

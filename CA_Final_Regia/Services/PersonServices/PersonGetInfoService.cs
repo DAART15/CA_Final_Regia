@@ -5,12 +5,11 @@ namespace CA_Final_Regia.Services.PersonServices
 {
     public class PersonGetInfoService(IPersonRepository personRepository) : IPersonGetInfoService
     {
-        private readonly IPersonRepository _personRepository = personRepository;
         public async Task<ResponseDto<PersonGetDto>> GetPersonInfoAsync(Guid accountId)
         {
             try
             {
-                var person = await _personRepository.GetPersonAsync(accountId);
+                var person = await personRepository.GetPersonAsync(accountId);
                 if (person == null)
                 {
                     return new ResponseDto<PersonGetDto>(false, "Person not found.", ResponseDto<PersonGetDto>.Status.Not_Found);

@@ -9,10 +9,6 @@ namespace CA_Final_Regia.Controllers
     [ApiController]
     public class UserController(IUserLogInService userLogInService, IUserRegisterService userRegisterService, ILogger<UserController> logger, IJwtTokenService jwtService) : ControllerBase
     {
-        private readonly IUserLogInService _userLogInService = userLogInService;
-        private readonly IUserRegisterService _userRegisterService = userRegisterService;
-        private readonly ILogger _logger = logger;
-        private readonly IJwtTokenService _jwtService = jwtService;
 
         [HttpPost("register")]
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -23,12 +19,12 @@ namespace CA_Final_Regia.Controllers
         {
             try
             {
-                var response = await _userRegisterService.RegisterAsync(user);
+                var response = await userRegisterService.RegisterAsync(user);
                 return StatusCode((int)response.StatusCode, response.Message);
             }
             catch (ArgumentException ex)
             {
-                _logger.LogCritical(ex, "An error occurred while registering a new user.");
+                logger.LogCritical(ex, "An error occurred while registering a new user.");
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while registering a new user.");
             }
         }
@@ -40,16 +36,16 @@ namespace CA_Final_Regia.Controllers
         {
             try
             {
-                var response = await _userLogInService.LogInAsync(user);
+                var response = await userLogInService.LogInAsync(user);
                 if (!response.IsSuccess)
                 {
                     return StatusCode((int)response.StatusCode, response.Message);
                 }
-                return Ok(_jwtService.GenerateToken(response.AccountId, response.Role));
+                return Ok(jwtService.GenerateToken(response.AccountId, response.Role));
             }
             catch (ArgumentException ex)
             {
-                _logger.LogCritical(ex, "An error occurred while logging in.");
+                logger.LogCritical(ex, "An error occurred while logging in.");
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while logging in.");
             }
         }

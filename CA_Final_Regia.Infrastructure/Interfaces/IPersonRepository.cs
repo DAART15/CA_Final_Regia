@@ -5,5 +5,6 @@ namespace CA_Final_Regia.Infrastructure.Interfaces
     {
         Task<Person?> GetPersonAsync(Guid accountId);
         Task<Person> CreatePersonAsync(Person person);
+        Task<Person> UpdatePersonAsync(Person person);
     }
 }
