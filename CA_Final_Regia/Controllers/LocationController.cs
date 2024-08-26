@@ -1,10 +1,9 @@
-﻿using CA_Final_Regia.DTOs;
-using CA_Final_Regia.Interfaces;
+﻿using CA_Final_Regia.Services.DTOs;
+using CA_Final_Regia.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
-namespace CA_Final_Regia.Controllers
+namespace CA_Final_Regia.Web.API.Controllers
 {
     [Route("regia/location")]
     [ApiController]
@@ -19,7 +18,7 @@ namespace CA_Final_Regia.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> AddLocationAsync([FromHeader(Name = "Authorization")] string auth, [FromBody]LocationDto locationDto)
+        public async Task<IActionResult> AddLocationAsync([FromHeader(Name = "Authorization")] string auth, [FromBody] LocationDto locationDto)
         {
             try
             {
@@ -73,7 +72,7 @@ namespace CA_Final_Regia.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> UpdateCityAsync([FromHeader(Name = "Authorization")] string auth, [FromForm] KeyValue personUpdateKeyValue)
+        public async Task<IActionResult> UpdateCityAsync([FromHeader(Name = "Authorization")] string auth, [FromBody] KeyValue personUpdateKeyValue)
         {
             try
             {
@@ -98,7 +97,7 @@ namespace CA_Final_Regia.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> UpdateStreetAsync([FromHeader(Name = "Authorization")] string auth, [FromForm] KeyValue personUpdateKeyValue)
+        public async Task<IActionResult> UpdateStreetAsync([FromHeader(Name = "Authorization")] string auth, [FromBody] KeyValue personUpdateKeyValue)
         {
             try
             {
@@ -123,7 +122,7 @@ namespace CA_Final_Regia.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> UpdateHouseNrAsync([FromHeader(Name = "Authorization")] string auth, [FromForm] KeyValue personUpdateKeyValue)
+        public async Task<IActionResult> UpdateHouseNrAsync([FromHeader(Name = "Authorization")] string auth, [FromBody] KeyValue personUpdateKeyValue)
         {
             try
             {
@@ -148,7 +147,7 @@ namespace CA_Final_Regia.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> UpdateApartmentNrAsync([FromHeader(Name = "Authorization")] string auth, [FromForm] KeyValue personUpdateKeyValue)
+        public async Task<IActionResult> UpdateApartmentNrAsync([FromHeader(Name = "Authorization")] string auth, [FromBody] KeyValue personUpdateKeyValue)
         {
             try
             {

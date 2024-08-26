@@ -1,6 +1,6 @@
-﻿using CA_Final_Regia.Domain.Models;
+﻿using CA_Final_Regia.Domain.Entities;
+using CA_Final_Regia.Domain.Interfaces.Repository;
 using CA_Final_Regia.Infrastructure.DataBase;
-using CA_Final_Regia.Infrastructure.Interfaces;
 using Microsoft.EntityFrameworkCore;
 namespace CA_Final_Regia.Infrastructure.Repositories
 {
@@ -30,13 +30,12 @@ namespace CA_Final_Regia.Infrastructure.Repositories
                 throw new ArgumentException(ex.Message);
             }
         }
-        public async Task<Account> CreateAccountAsync(Account account)
+        public async Task CreateAccountAsync(Account account)
         {
             try
             {
                 await _dbContext.Accounts.AddAsync(account);
                 await _dbContext.SaveChangesAsync();
-                return account;
             }
             catch (ArgumentException ex)
             {

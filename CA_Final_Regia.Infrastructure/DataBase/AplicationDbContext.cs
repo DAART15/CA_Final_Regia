@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using CA_Final_Regia.Domain.Models;
 using CA_Final_Regia.Infrastructure.DataBase.Configuration;
-
+using CA_Final_Regia.Domain.Entities;
 namespace CA_Final_Regia.Infrastructure.DataBase
 {
     public class AplicationDbContext : DbContext

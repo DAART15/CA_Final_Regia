@@ -1,6 +1,6 @@
-﻿using CA_Final_Regia.Domain.Models;
+﻿using CA_Final_Regia.Domain.Entities;
+using CA_Final_Regia.Domain.Interfaces.Repository;
 using CA_Final_Regia.Infrastructure.DataBase;
-using CA_Final_Regia.Infrastructure.Interfaces;
 using Microsoft.EntityFrameworkCore;
 namespace CA_Final_Regia.Infrastructure.Repositories
 {
@@ -18,26 +18,24 @@ namespace CA_Final_Regia.Infrastructure.Repositories
                 throw new ArgumentException(ex.Message);
             }
         }
-        public async Task<Location> CreateLocationAsync(Location location)
+        public async Task CreateLocationAsync(Location location)
         {
             try
             {
                 await _dbContext.Locations.AddAsync(location);
                 await _dbContext.SaveChangesAsync();
-                return location;
             }
             catch (ArgumentException ex)
             {
                 throw new ArgumentException(ex.Message);
             }
         }
-        public async Task<Location> UpdateLocationAsync(Location location)
+        public async Task UpdateLocationAsync(Location location)
         {
             try
             {
                 _dbContext.Locations.Update(location);
                 await _dbContext.SaveChangesAsync();
-                return location;
             }
             catch (ArgumentException ex)
             {

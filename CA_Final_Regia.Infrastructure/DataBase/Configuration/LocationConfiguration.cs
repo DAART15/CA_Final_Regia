@@ -1,4 +1,4 @@
-﻿using CA_Final_Regia.Domain.Models;
+﻿using CA_Final_Regia.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace CA_Final_Regia.Infrastructure.DataBase.Configuration
