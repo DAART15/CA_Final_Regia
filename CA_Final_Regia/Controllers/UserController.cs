@@ -1,15 +1,13 @@
-﻿using CA_Final_Regia.DTOs;
-using CA_Final_Regia.Interfaces;
-using CA_Final_Regia.Services.JwtServices;
+﻿using CA_Final_Regia.Services.DTOs;
+using CA_Final_Regia.Services.Interfaces;
+using CA_Final_Regia.Services.Services.JwtServices;
 using Microsoft.AspNetCore.Mvc;
-
-namespace CA_Final_Regia.Controllers
+namespace CA_Final_Regia.Web.API.Controllers
 {
     [Route("regia/user")]
     [ApiController]
     public class UserController(IUserLogInService userLogInService, IUserRegisterService userRegisterService, ILogger<UserController> logger, IJwtTokenService jwtService) : ControllerBase
     {
-
         [HttpPost("register")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

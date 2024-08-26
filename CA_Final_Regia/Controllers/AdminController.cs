@@ -1,10 +1,9 @@
-﻿using CA_Final_Regia.DTOs;
-using CA_Final_Regia.Interfaces;
+﻿using CA_Final_Regia.Services.DTOs;
+using CA_Final_Regia.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
-namespace CA_Final_Regia.Controllers
+namespace CA_Final_Regia.Web.API.Controllers
 {
     [Route("regia/admin")]
     [ApiController]
@@ -43,7 +42,7 @@ namespace CA_Final_Regia.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult>DeleteUserByIdAsync([FromBody] Guid accountId)
+        public async Task<IActionResult> DeleteUserByIdAsync([FromBody] Guid accountId)
         {
             try
             {

@@ -1,9 +1,9 @@
-﻿using CA_Final_Regia.DTOs;
-using CA_Final_Regia.Interfaces;
+﻿using CA_Final_Regia.Services.DTOs;
+using CA_Final_Regia.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-namespace CA_Final_Regia.Controllers
+namespace CA_Final_Regia.Web.API.Controllers
 {
     [Route("regia/person")]
     [ApiController]
@@ -18,7 +18,7 @@ namespace CA_Final_Regia.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> AddPersonInfoAsync([FromHeader(Name = "Authorization")] string auth,[FromForm] PersonPostDto personDto)
+        public async Task<IActionResult> AddPersonInfoAsync([FromHeader(Name = "Authorization")] string auth, [FromForm] PersonPostDto personDto)
         {
             try
             {
@@ -53,7 +53,7 @@ namespace CA_Final_Regia.Controllers
                     return Unauthorized("Token is invalid");
                 }
                 var response = await personGetInfoService.GetPersonInfoAsync(accountId);
-                if(!response.IsSuccess)
+                if (!response.IsSuccess)
                 {
                     return StatusCode((int)response.StatusCode, response.Message);
                 }
@@ -172,7 +172,7 @@ namespace CA_Final_Regia.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> UpdatePictureAsync([FromHeader(Name = "Authorization")] string auth, [FromForm] KeyValue personUpdateKeyValue)
+        public async Task<IActionResult> UpdatePictureAsync([FromHeader(Name = "Authorization")] string auth, [FromForm] PictureDto pictureDto)
         {
             try
             {
@@ -181,7 +181,7 @@ namespace CA_Final_Regia.Controllers
                 {
                     return Unauthorized("Token is invalid");
                 }
-                var response = await personUpdateService.UpdatePersonAsync(personUpdateKeyValue, accountId);
+                var response = await personUpdateService.UpdatePersonPictureAsync(pictureDto, accountId);
                 return StatusCode((int)response.StatusCode, response.Message);
             }
             catch (ArgumentException ex)
