@@ -12,7 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CA_Final_Regia.Domain\CA_Final_Regia.Domain.csproj" />
     <ProjectReference Include="..\CA_Final_Regia.IoC\CA_Final_Regia.IoC.csproj" />
   </ItemGroup>
 
