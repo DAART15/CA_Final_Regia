@@ -27,10 +27,10 @@ namespace CA_Final_Regia.Web.API.Controllers
             }
         }
         [HttpPost("login")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ActionResult<JwtTokenService>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ActionResult<string>))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<JwtTokenService>> LogInAsync(User user)
+        public async Task<ActionResult<string>> LogInAsync(User user)
         {
             try
             {
