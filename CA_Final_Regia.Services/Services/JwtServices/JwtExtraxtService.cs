@@ -3,7 +3,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 namespace CA_Final_Regia.Services.Services.JwtServices
 {
-    public class JwtExtraxtService : IJwtExtraxtService
+    public class JwtExtraxtService : IJwtExtractService
     {
         public Guid GetAccountIdFromJwtToken(string authorizationHeader)
         {

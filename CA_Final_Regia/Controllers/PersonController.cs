@@ -9,7 +9,7 @@ namespace CA_Final_Regia.Web.API.Controllers
     [ApiController]
     [Authorize]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "User")]
-    public class PersonController(IPersonAddInfoService personAddInfoServise, ILogger<PersonController> logger, IJwtExtraxtService jwtExtraxtSerevice, IPersonGetInfoService personGetInfoService, IPersonUpdateService personUpdateService) : ControllerBase
+    public class PersonController(IPersonAddInfoService personAddInfoServise, ILogger<PersonController> logger, IJwtExtractService jwtExtraxtSerevice, IPersonGetInfoService personGetInfoService, IPersonUpdateService personUpdateService) : ControllerBase
     {
         [HttpPost("add")]
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -138,6 +138,31 @@ namespace CA_Final_Regia.Web.API.Controllers
             {
                 logger.LogCritical(ex, "An error occurred while updating person personal ID.");
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while updating person personal ID.");
+            }
+        }
+        [HttpPut("update/phonenumber")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> UpdatePhoneNumberAsync([FromHeader(Name = "Authorization")] string auth, [FromBody] KeyValue personUpdateKeyValue)
+        {
+            try
+            {
+                Guid accountId = jwtExtraxtSerevice.GetAccountIdFromJwtToken(auth);
+                if (accountId == Guid.Empty)
+                {
+                    return Unauthorized("Token is invalid");
+                }
+                var response = await personUpdateService.UpdatePersonAsync(personUpdateKeyValue, accountId);
+                return StatusCode((int)response.StatusCode, response.Message);
+            }
+            catch (ArgumentException ex)
+            {
+                logger.LogCritical(ex, "An error occurred while updating person phone number.");
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while updating person phone number.");
             }
         }
         [HttpPut("update/mail")]

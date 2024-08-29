@@ -1,6 +1,6 @@
 ﻿namespace CA_Final_Regia.Services.Interfaces
 {
-    public interface IJwtExtraxtService
+    public interface IJwtExtractService
     {
         Guid GetAccountIdFromJwtToken(string authorizationHeader);
     }

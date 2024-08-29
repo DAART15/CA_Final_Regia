@@ -22,7 +22,7 @@ namespace CA_Final_Regia.IoC.ServiceCollectionExtensions
             services.AddScoped<IPictureResizeService, PictureResizeService>();
             services.AddScoped<IPersonAddInfoService, PersonAddInfoService>();
             services.AddScoped<ILocationAddService, LocationAddService>();
-            services.AddScoped<IJwtExtraxtService, JwtExtraxtService>();
+            services.AddScoped<IJwtExtractService, JwtExtraxtService>();
             services.AddScoped<IGetUsersService, GetUsersService>();
             services.AddScoped<IDeleteUserService, DeleteUserService>();
             services.AddScoped<IPersonGetInfoService, PersonGetInfoService>();

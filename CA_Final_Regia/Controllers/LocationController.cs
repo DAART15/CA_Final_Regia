@@ -9,7 +9,7 @@ namespace CA_Final_Regia.Web.API.Controllers
     [ApiController]
     [Authorize]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "User")]
-    public class LocationController(ILogger<LocationController> logger, IJwtExtraxtService jwtExtraxtSerevice, ILocationAddService locationAddService, ILocationGetService locationGetService, ILocationUpdateService locationUpdateService) : ControllerBase
+    public class LocationController(ILogger<LocationController> logger, IJwtExtractService jwtExtraxtSerevice, ILocationAddService locationAddService, ILocationGetService locationGetService, ILocationUpdateService locationUpdateService) : ControllerBase
     {
         [HttpPost("add")]
         [ProducesResponseType(StatusCodes.Status201Created)]
