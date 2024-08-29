@@ -4,6 +4,6 @@ namespace CA_Final_Regia.Services.Interfaces
 {
     public interface ILocationAddService
     {
-        Task<ResponseDto<Location>> AddLocationAsync(LocationDto locationDto, Guid accountId);
+        Task<ResponseDto<LocationDto>> AddLocationAsync(LocationDto locationDto, Guid accountId);
     }
 }

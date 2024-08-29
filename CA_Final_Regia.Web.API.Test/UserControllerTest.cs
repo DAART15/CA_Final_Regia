@@ -2,7 +2,6 @@ using AutoFixture.Xunit2;
 using CA_Final_Regia.Domain.Entities;
 using CA_Final_Regia.Services.DTOs;
 using CA_Final_Regia.Services.Interfaces;
-using CA_Final_Regia.Services.Services.JwtServices;
 using CA_Final_Regia.Web.API.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;

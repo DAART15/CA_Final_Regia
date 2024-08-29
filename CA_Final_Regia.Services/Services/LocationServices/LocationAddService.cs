@@ -6,14 +6,14 @@ namespace CA_Final_Regia.Services.Services.LocationServices
 {
     public class LocationAddService(ILocationRepository locationRepository, IDtoValidation<LocationDto> dtoValidation) : ILocationAddService
     {
-        public async Task<ResponseDto<Location>> AddLocationAsync(LocationDto locationDto, Guid accountId)
+        public async Task<ResponseDto<LocationDto>> AddLocationAsync(LocationDto locationDto, Guid accountId)
         {
             try
             {
                 var validation = dtoValidation.DtoKeyValueValidation(locationDto);
                 if (!validation.IsSuccess)
                 {
-                    return new ResponseDto<Location>(false, validation.Message, ResponseDto<Location>.Status.Bad_Request);
+                    return new ResponseDto<LocationDto>(false, validation.Message, ResponseDto<LocationDto>.Status.Bad_Request);
                 }
                 Location location = new Location
                 {
@@ -24,7 +24,7 @@ namespace CA_Final_Regia.Services.Services.LocationServices
                     ApartmentNr = locationDto.ApartmentNr
                 };
                 await locationRepository.CreateLocationAsync(location);
-                return new ResponseDto<Location>(true, "Location added", ResponseDto<Location>.Status.Created);
+                return new ResponseDto<LocationDto>(true, "Location added", ResponseDto<LocationDto>.Status.Created);
             }
             catch (ArgumentException ex)
             {

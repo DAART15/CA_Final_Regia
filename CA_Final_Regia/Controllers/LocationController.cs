@@ -9,7 +9,7 @@ namespace CA_Final_Regia.Web.API.Controllers
     [ApiController]
     [Authorize]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "User")]
-    public class LocationController(ILogger<PersonController> logger, IJwtExtraxtService jwtExtraxtSerevice, ILocationAddService locationAddService, ILocationGetService locationGetService, ILocationUpdateService locationUpdateService) : ControllerBase
+    public class LocationController(ILogger<LocationController> logger, IJwtExtraxtService jwtExtraxtSerevice, ILocationAddService locationAddService, ILocationGetService locationGetService, ILocationUpdateService locationUpdateService) : ControllerBase
     {
         [HttpPost("add")]
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -72,7 +72,7 @@ namespace CA_Final_Regia.Web.API.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> UpdateCityAsync([FromHeader(Name = "Authorization")] string auth, [FromBody] KeyValue personUpdateKeyValue)
+        public async Task<IActionResult> UpdateCityAsync([FromHeader(Name = "Authorization")] string auth, [FromBody] KeyValue locationUpdateKeyValue)
         {
             try
             {
@@ -81,7 +81,7 @@ namespace CA_Final_Regia.Web.API.Controllers
                 {
                     return Unauthorized("Token is invalid");
                 }
-                var response = await locationUpdateService.UpdateLocationAsync(personUpdateKeyValue, accountId);
+                var response = await locationUpdateService.UpdateLocationAsync(locationUpdateKeyValue, accountId);
                 return StatusCode((int)response.StatusCode, response.Message);
             }
             catch (ArgumentException ex)
@@ -97,7 +97,7 @@ namespace CA_Final_Regia.Web.API.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> UpdateStreetAsync([FromHeader(Name = "Authorization")] string auth, [FromBody] KeyValue personUpdateKeyValue)
+        public async Task<IActionResult> UpdateStreetAsync([FromHeader(Name = "Authorization")] string auth, [FromBody] KeyValue locationUpdateKeyValue)
         {
             try
             {
@@ -106,7 +106,7 @@ namespace CA_Final_Regia.Web.API.Controllers
                 {
                     return Unauthorized("Token is invalid");
                 }
-                var response = await locationUpdateService.UpdateLocationAsync(personUpdateKeyValue, accountId);
+                var response = await locationUpdateService.UpdateLocationAsync(locationUpdateKeyValue, accountId);
                 return StatusCode((int)response.StatusCode, response.Message);
             }
             catch (ArgumentException ex)
@@ -122,7 +122,7 @@ namespace CA_Final_Regia.Web.API.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> UpdateHouseNrAsync([FromHeader(Name = "Authorization")] string auth, [FromBody] KeyValue personUpdateKeyValue)
+        public async Task<IActionResult> UpdateHouseNrAsync([FromHeader(Name = "Authorization")] string auth, [FromBody] KeyValue locationUpdateKeyValue)
         {
             try
             {
@@ -131,7 +131,7 @@ namespace CA_Final_Regia.Web.API.Controllers
                 {
                     return Unauthorized("Token is invalid");
                 }
-                var response = await locationUpdateService.UpdateLocationAsync(personUpdateKeyValue, accountId);
+                var response = await locationUpdateService.UpdateLocationAsync(locationUpdateKeyValue, accountId);
                 return StatusCode((int)response.StatusCode, response.Message);
             }
             catch (ArgumentException ex)
@@ -147,7 +147,7 @@ namespace CA_Final_Regia.Web.API.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> UpdateApartmentNrAsync([FromHeader(Name = "Authorization")] string auth, [FromBody] KeyValue personUpdateKeyValue)
+        public async Task<IActionResult> UpdateApartmentNrAsync([FromHeader(Name = "Authorization")] string auth, [FromBody] KeyValue locationUpdateKeyValue)
         {
             try
             {
@@ -156,7 +156,7 @@ namespace CA_Final_Regia.Web.API.Controllers
                 {
                     return Unauthorized("Token is invalid");
                 }
-                var response = await locationUpdateService.UpdateLocationAsync(personUpdateKeyValue, accountId);
+                var response = await locationUpdateService.UpdateLocationAsync(locationUpdateKeyValue, accountId);
                 return StatusCode((int)response.StatusCode, response.Message);
             }
             catch (ArgumentException ex)
