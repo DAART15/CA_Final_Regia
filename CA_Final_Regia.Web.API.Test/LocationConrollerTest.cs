@@ -125,6 +125,7 @@ namespace CA_Final_Regia.Web.API.Test
             var loggerMock = new Mock<ILogger<LocationController>>();
             var jwtExtraxtSereviceMock = new Mock<IJwtExtractService>();
             var anyGuid = Guid.NewGuid();
+            locationUpdateKeyValue.Key = "City";
             //sut - Subject Under Test
             var sut = new LocationController(loggerMock.Object, jwtExtraxtSereviceMock.Object, locationAddServiceMock.Object, locationGetServiceMock.Object, locationUpdateServiceMock.Object);
             var expectedResponse = new ResponseDto<LocationDto>(true, "City updated", ResponseDto<LocationDto>.Status.Created);
@@ -146,6 +147,7 @@ namespace CA_Final_Regia.Web.API.Test
             var loggerMock = new Mock<ILogger<LocationController>>();
             var jwtExtraxtSereviceMock = new Mock<IJwtExtractService>();
             var anyGuid = Guid.NewGuid();
+            locationUpdateKeyValue.Key = "City";
             //sut - Subject Under Test
             var sut = new LocationController(loggerMock.Object, jwtExtraxtSereviceMock.Object, locationAddServiceMock.Object, locationGetServiceMock.Object, locationUpdateServiceMock.Object);
             var expectedResponse = new ResponseDto<LocationDto>(false, "Bad Request", ResponseDto<LocationDto>.Status.Bad_Request);
@@ -158,6 +160,23 @@ namespace CA_Final_Regia.Web.API.Test
             Assert.Equal((int)expectedResponse.StatusCode, objectResult.StatusCode);
         }
         [Theory, AutoData]
+        public async Task UpdateCityAsync_When_Key_Is_Invalid_Returns400BadRequest(KeyValue locationUpdateKeyValue)
+        {
+            //Arrange
+            var locationAddServiceMock = new Mock<ILocationAddService>();
+            var locationGetServiceMock = new Mock<ILocationGetService>();
+            var locationUpdateServiceMock = new Mock<ILocationUpdateService>();
+            var loggerMock = new Mock<ILogger<LocationController>>();
+            var jwtExtraxtSereviceMock = new Mock<IJwtExtractService>();
+            //sut - Subject Under Test
+            var sut = new LocationController(loggerMock.Object, jwtExtraxtSereviceMock.Object, locationAddServiceMock.Object, locationGetServiceMock.Object, locationUpdateServiceMock.Object);
+            //Act
+            var response = await sut.UpdateCityAsync(It.IsAny<string>(), locationUpdateKeyValue);
+            //Assert
+            var objectResult = Assert.IsType<BadRequestObjectResult>(response);
+            Assert.Equal(StatusCodes.Status400BadRequest, objectResult.StatusCode);
+        }
+        [Theory, AutoData]
         public async Task UpdateStreetAsync_Returns201Created(KeyValue locationUpdateKeyValue)
         {
             //Arrange
@@ -167,6 +186,7 @@ namespace CA_Final_Regia.Web.API.Test
             var loggerMock = new Mock<ILogger<LocationController>>();
             var jwtExtraxtSereviceMock = new Mock<IJwtExtractService>();
             var anyGuid = Guid.NewGuid();
+            locationUpdateKeyValue.Key = "Street";
             //sut - Subject Under Test
             var sut = new LocationController(loggerMock.Object, jwtExtraxtSereviceMock.Object, locationAddServiceMock.Object, locationGetServiceMock.Object, locationUpdateServiceMock.Object);
             var expectedResponse = new ResponseDto<LocationDto>(true, "Street updated", ResponseDto<LocationDto>.Status.Created);
@@ -188,6 +208,7 @@ namespace CA_Final_Regia.Web.API.Test
             var loggerMock = new Mock<ILogger<LocationController>>();
             var jwtExtraxtSereviceMock = new Mock<IJwtExtractService>();
             var anyGuid = Guid.NewGuid();
+            locationUpdateKeyValue.Key = "Street";
             //sut - Subject Under Test
             var sut = new LocationController(loggerMock.Object, jwtExtraxtSereviceMock.Object, locationAddServiceMock.Object, locationGetServiceMock.Object, locationUpdateServiceMock.Object);
             var expectedResponse = new ResponseDto<LocationDto>(false, "Bad Request", ResponseDto<LocationDto>.Status.Bad_Request);
@@ -200,6 +221,23 @@ namespace CA_Final_Regia.Web.API.Test
             Assert.Equal((int)expectedResponse.StatusCode, objectResult.StatusCode);
         }
         [Theory, AutoData]
+        public async Task UpdateStreetAsync_When_Key_Is_Invalid_Returns400BadRequest(KeyValue locationUpdateKeyValue)
+        {
+            //Arrange
+            var locationAddServiceMock = new Mock<ILocationAddService>();
+            var locationGetServiceMock = new Mock<ILocationGetService>();
+            var locationUpdateServiceMock = new Mock<ILocationUpdateService>();
+            var loggerMock = new Mock<ILogger<LocationController>>();
+            var jwtExtraxtSereviceMock = new Mock<IJwtExtractService>();
+            //sut - Subject Under Test
+            var sut = new LocationController(loggerMock.Object, jwtExtraxtSereviceMock.Object, locationAddServiceMock.Object, locationGetServiceMock.Object, locationUpdateServiceMock.Object);
+            //Act
+            var response = await sut.UpdateStreetAsync(It.IsAny<string>(), locationUpdateKeyValue);
+            //Assert
+            var objectResult = Assert.IsType<BadRequestObjectResult>(response);
+            Assert.Equal(StatusCodes.Status400BadRequest, objectResult.StatusCode);
+        }
+        [Theory, AutoData]
         public async Task UpdateHouseNrAsync_Returns201Created(KeyValue locationUpdateKeyValue)
         {
             //Arrange
@@ -209,6 +247,7 @@ namespace CA_Final_Regia.Web.API.Test
             var loggerMock = new Mock<ILogger<LocationController>>();
             var jwtExtraxtSereviceMock = new Mock<IJwtExtractService>();
             var anyGuid = Guid.NewGuid();
+            locationUpdateKeyValue.Key = "HouseNr";
             //sut - Subject Under Test
             var sut = new LocationController(loggerMock.Object, jwtExtraxtSereviceMock.Object, locationAddServiceMock.Object, locationGetServiceMock.Object, locationUpdateServiceMock.Object);
             var expectedResponse = new ResponseDto<LocationDto>(true, "HouseNr updated", ResponseDto<LocationDto>.Status.Created);
@@ -230,6 +269,7 @@ namespace CA_Final_Regia.Web.API.Test
             var loggerMock = new Mock<ILogger<LocationController>>();
             var jwtExtraxtSereviceMock = new Mock<IJwtExtractService>();
             var anyGuid = Guid.NewGuid();
+            locationUpdateKeyValue.Key = "HouseNr";
             //sut - Subject Under Test
             var sut = new LocationController(loggerMock.Object, jwtExtraxtSereviceMock.Object, locationAddServiceMock.Object, locationGetServiceMock.Object, locationUpdateServiceMock.Object);
             var expectedResponse = new ResponseDto<LocationDto>(false, "Bad Request", ResponseDto<LocationDto>.Status.Bad_Request);
@@ -242,6 +282,23 @@ namespace CA_Final_Regia.Web.API.Test
             Assert.Equal((int)expectedResponse.StatusCode, objectResult.StatusCode);
         }
         [Theory, AutoData]
+        public async Task UpdateHouseNrAsync_When_Key_Is_Invalid_Returns400BadRequest(KeyValue locationUpdateKeyValue)
+        {
+            //Arrange
+            var locationAddServiceMock = new Mock<ILocationAddService>();
+            var locationGetServiceMock = new Mock<ILocationGetService>();
+            var locationUpdateServiceMock = new Mock<ILocationUpdateService>();
+            var loggerMock = new Mock<ILogger<LocationController>>();
+            var jwtExtraxtSereviceMock = new Mock<IJwtExtractService>();
+            //sut - Subject Under Test
+            var sut = new LocationController(loggerMock.Object, jwtExtraxtSereviceMock.Object, locationAddServiceMock.Object, locationGetServiceMock.Object, locationUpdateServiceMock.Object);
+            //Act
+            var response = await sut.UpdateHouseNrAsync(It.IsAny<string>(), locationUpdateKeyValue);
+            //Assert
+            var objectResult = Assert.IsType<BadRequestObjectResult>(response);
+            Assert.Equal(StatusCodes.Status400BadRequest, objectResult.StatusCode);
+        }
+        [Theory, AutoData]
         public async Task UpdateApartmentNrAsync_Returns201Created(KeyValue locationUpdateKeyValue)
         {
             //Arrange
@@ -251,6 +308,7 @@ namespace CA_Final_Regia.Web.API.Test
             var loggerMock = new Mock<ILogger<LocationController>>();
             var jwtExtraxtSereviceMock = new Mock<IJwtExtractService>();
             var anyGuid = Guid.NewGuid();
+            locationUpdateKeyValue.Key = "ApartmentNr";
             //sut - Subject Under Test
             var sut = new LocationController(loggerMock.Object, jwtExtraxtSereviceMock.Object, locationAddServiceMock.Object, locationGetServiceMock.Object, locationUpdateServiceMock.Object);
             var expectedResponse = new ResponseDto<LocationDto>(true, "ApartmentNr updated", ResponseDto<LocationDto>.Status.Created);
@@ -272,6 +330,7 @@ namespace CA_Final_Regia.Web.API.Test
             var loggerMock = new Mock<ILogger<LocationController>>();
             var jwtExtraxtSereviceMock = new Mock<IJwtExtractService>();
             var anyGuid = Guid.NewGuid();
+            locationUpdateKeyValue.Key = "ApartmentNr";
             //sut - Subject Under Test
             var sut = new LocationController(loggerMock.Object, jwtExtraxtSereviceMock.Object, locationAddServiceMock.Object, locationGetServiceMock.Object, locationUpdateServiceMock.Object);
             var expectedResponse = new ResponseDto<LocationDto>(false, "Bad Request", ResponseDto<LocationDto>.Status.Bad_Request);
@@ -282,6 +341,23 @@ namespace CA_Final_Regia.Web.API.Test
             //Assert
             var objectResult = Assert.IsType<ObjectResult>(response);
             Assert.Equal((int)expectedResponse.StatusCode, objectResult.StatusCode);
+        }
+        [Theory, AutoData]
+        public async Task UpdateApartmentNrAsync_When_Key_Is_Invalid_Returns400BadRequest(KeyValue locationUpdateKeyValue)
+        {
+            //Arrange
+            var locationAddServiceMock = new Mock<ILocationAddService>();
+            var locationGetServiceMock = new Mock<ILocationGetService>();
+            var locationUpdateServiceMock = new Mock<ILocationUpdateService>();
+            var loggerMock = new Mock<ILogger<LocationController>>();
+            var jwtExtraxtSereviceMock = new Mock<IJwtExtractService>();
+            //sut - Subject Under Test
+            var sut = new LocationController(loggerMock.Object, jwtExtraxtSereviceMock.Object, locationAddServiceMock.Object, locationGetServiceMock.Object, locationUpdateServiceMock.Object);
+            //Act
+            var response = await sut.UpdateApartmentNrAsync(It.IsAny<string>(), locationUpdateKeyValue);
+            //Assert
+            var objectResult = Assert.IsType<BadRequestObjectResult>(response);
+            Assert.Equal(StatusCodes.Status400BadRequest, objectResult.StatusCode);
         }
     }
 }

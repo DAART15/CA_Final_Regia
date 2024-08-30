@@ -76,6 +76,10 @@ namespace CA_Final_Regia.Web.API.Controllers
         {
             try
             {
+                if (personUpdateKeyValue.Key != "FirstName")
+                {
+                    return BadRequest("Invalid key");
+                }
                 Guid accountId = jwtExtraxtSerevice.GetAccountIdFromJwtToken(auth);
                 if (accountId == Guid.Empty)
                 {
@@ -101,6 +105,10 @@ namespace CA_Final_Regia.Web.API.Controllers
         {
             try
             {
+                if (personUpdateKeyValue.Key != "LastName")
+                {
+                    return BadRequest("Invalid key");
+                }
                 Guid accountId = jwtExtraxtSerevice.GetAccountIdFromJwtToken(auth);
                 if (accountId == Guid.Empty)
                 {
@@ -126,6 +134,10 @@ namespace CA_Final_Regia.Web.API.Controllers
         {
             try
             {
+                if (personUpdateKeyValue.Key != "PersonalId")
+                {
+                    return BadRequest("Invalid key");
+                }
                 Guid accountId = jwtExtraxtSerevice.GetAccountIdFromJwtToken(auth);
                 if (accountId == Guid.Empty)
                 {
@@ -151,6 +163,10 @@ namespace CA_Final_Regia.Web.API.Controllers
         {
             try
             {
+                if (personUpdateKeyValue.Key != "PhoneNumber")
+                {
+                    return BadRequest("Invalid key");
+                }
                 Guid accountId = jwtExtraxtSerevice.GetAccountIdFromJwtToken(auth);
                 if (accountId == Guid.Empty)
                 {
@@ -176,6 +192,10 @@ namespace CA_Final_Regia.Web.API.Controllers
         {
             try
             {
+                if (personUpdateKeyValue.Key != "Mail")
+                {
+                    return BadRequest("Invalid key");
+                }
                 Guid accountId = jwtExtraxtSerevice.GetAccountIdFromJwtToken(auth);
                 if (accountId == Guid.Empty)
                 {

@@ -76,6 +76,10 @@ namespace CA_Final_Regia.Web.API.Controllers
         {
             try
             {
+                if(locationUpdateKeyValue.Key != "City")
+                {
+                    return BadRequest("Invalid key");
+                }
                 Guid accountId = jwtExtraxtSerevice.GetAccountIdFromJwtToken(auth);
                 if (accountId == Guid.Empty)
                 {
@@ -101,6 +105,10 @@ namespace CA_Final_Regia.Web.API.Controllers
         {
             try
             {
+                if(locationUpdateKeyValue.Key != "Street")
+                {
+                    return BadRequest("Invalid key");
+                }
                 Guid accountId = jwtExtraxtSerevice.GetAccountIdFromJwtToken(auth);
                 if (accountId == Guid.Empty)
                 {
@@ -126,6 +134,10 @@ namespace CA_Final_Regia.Web.API.Controllers
         {
             try
             {
+                if (locationUpdateKeyValue.Key != "HouseNr")
+                {
+                    return BadRequest("Invalid key");
+                }
                 Guid accountId = jwtExtraxtSerevice.GetAccountIdFromJwtToken(auth);
                 if (accountId == Guid.Empty)
                 {
@@ -151,6 +163,10 @@ namespace CA_Final_Regia.Web.API.Controllers
         {
             try
             {
+                if (locationUpdateKeyValue.Key != "ApartmentNr")
+                {
+                    return BadRequest("Invalid key");
+                }
                 Guid accountId = jwtExtraxtSerevice.GetAccountIdFromJwtToken(auth);
                 if (accountId == Guid.Empty)
                 {
