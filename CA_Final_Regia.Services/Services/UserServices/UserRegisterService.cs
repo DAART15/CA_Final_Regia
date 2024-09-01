@@ -13,6 +13,10 @@ namespace CA_Final_Regia.Services.Services.UserServices
         {
             try
             {
+                if (await UserExists(user.UserName))
+                {
+                    return new ResponseDto<User>(false, $"User with name {user.UserName} already exists. Try another User Name", ResponseDto<User>.Status.Bad_Request);
+                }
                 var validation = user.ValidateUserRegister();
                 if (!validation.IsSuccess)
                 {
@@ -39,6 +43,10 @@ namespace CA_Final_Regia.Services.Services.UserServices
             using var hmac = new HMACSHA512();
             passwordSalt = hmac.Key;
             passwordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+        }
+        public async Task<bool> UserExists(string userName)
+        {
+            return await accountRepository.GetAccountByUserNameAsync(userName) != null;
         }
     }
 }

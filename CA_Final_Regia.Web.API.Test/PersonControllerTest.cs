@@ -1,4 +1,6 @@
-﻿using AutoFixture.Xunit2;
+﻿using AutoFixture;
+using AutoFixture.Kernel;
+using AutoFixture.Xunit2;
 using CA_Final_Regia.Services.DTOs;
 using CA_Final_Regia.Services.Interfaces;
 using CA_Final_Regia.Web.API.Controllers;
@@ -21,6 +23,9 @@ namespace CA_Final_Regia.Web.API.Test
             var personGetInfoServiceMock = new Mock<IPersonGetInfoService>();
             var personUpdateServiceMock = new Mock<IPersonUpdateService>();
             var invalidGuid = Guid.Empty;
+            Fixture fixture = new Fixture();
+            fixture.Customizations.Add(new TypeRelay( typeof(IFormFile), typeof(FormFile)));
+            personPostDto = fixture.Create<PersonPostDto>();
             //sut - Subject Under Test
             var sut = new PersonController(personAddInfoServiseMock.Object, logerMock.Object, jwtExtraxtSereviceMock.Object, personGetInfoServiceMock.Object, personUpdateServiceMock.Object);
             jwtExtraxtSereviceMock.Setup(x => x.GetAccountIdFromJwtToken(It.IsAny<string>())).Returns(invalidGuid);
@@ -30,7 +35,7 @@ namespace CA_Final_Regia.Web.API.Test
             var unauthorizedResult = Assert.IsType<UnauthorizedObjectResult>(response);
             Assert.Equal(StatusCodes.Status401Unauthorized, unauthorizedResult.StatusCode);
             Assert.Equal("Token is invalid", unauthorizedResult.Value);
-        }
+        }  
         [Theory, AutoData]
         public async Task AddPersonInfoAsync_Return201Created(PersonPostDto personPostDto)
         {
