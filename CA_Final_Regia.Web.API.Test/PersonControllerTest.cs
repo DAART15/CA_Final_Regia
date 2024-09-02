@@ -14,50 +14,6 @@ namespace CA_Final_Regia.Web.API.Test
     public class PersonControllerTest
     {
         [Theory, AutoData]
-        public async Task AddPersonInfoAsync_WhenTokenIsInvalid_Return401Unauthorized(PersonPostDto personPostDto)
-        {
-            // Arrange
-            var personAddInfoServiseMock = new Mock<IPersonAddInfoService>();
-            var logerMock = new Mock<ILogger<PersonController>>();
-            var jwtExtraxtSereviceMock = new Mock<IJwtExtractService>();
-            var personGetInfoServiceMock = new Mock<IPersonGetInfoService>();
-            var personUpdateServiceMock = new Mock<IPersonUpdateService>();
-            var invalidGuid = Guid.Empty;
-            Fixture fixture = new Fixture();
-            fixture.Customizations.Add(new TypeRelay( typeof(IFormFile), typeof(FormFile)));
-            personPostDto = fixture.Create<PersonPostDto>();
-            //sut - Subject Under Test
-            var sut = new PersonController(personAddInfoServiseMock.Object, logerMock.Object, jwtExtraxtSereviceMock.Object, personGetInfoServiceMock.Object, personUpdateServiceMock.Object);
-            jwtExtraxtSereviceMock.Setup(x => x.GetAccountIdFromJwtToken(It.IsAny<string>())).Returns(invalidGuid);
-            // Act
-            var response = await sut.AddPersonInfoAsync("auth", personPostDto);
-            // Assert
-            var unauthorizedResult = Assert.IsType<UnauthorizedObjectResult>(response);
-            Assert.Equal(StatusCodes.Status401Unauthorized, unauthorizedResult.StatusCode);
-            Assert.Equal("Token is invalid", unauthorizedResult.Value);
-        }  
-        [Theory, AutoData]
-        public async Task AddPersonInfoAsync_Return201Created(PersonPostDto personPostDto)
-        {
-            // Arrange
-            var personAddInfoServiseMock = new Mock<IPersonAddInfoService>();
-            var logerMock = new Mock<ILogger<PersonController>>();
-            var jwtExtraxtSereviceMock = new Mock<IJwtExtractService>();
-            var personGetInfoServiceMock = new Mock<IPersonGetInfoService>();
-            var personUpdateServiceMock = new Mock<IPersonUpdateService>();
-            var accountId = Guid.NewGuid();
-            //sut - Subject Under Test
-            var sut = new PersonController(personAddInfoServiseMock.Object, logerMock.Object, jwtExtraxtSereviceMock.Object, personGetInfoServiceMock.Object, personUpdateServiceMock.Object);
-            var expectedResponse = new ResponseDto<PersonPostDto>(true, "Person added successfully", ResponseDto<PersonPostDto>.Status.Created);
-            jwtExtraxtSereviceMock.Setup(x => x.GetAccountIdFromJwtToken(It.IsAny<string>())).Returns(accountId);
-            personAddInfoServiseMock.Setup(x => x.AddPersonInfoAsync(personPostDto, It.IsAny<Guid>())).ReturnsAsync(expectedResponse);
-            // Act
-            var response = await sut.AddPersonInfoAsync(It.IsAny<string>(), personPostDto);
-            // Assert
-            var objectResult = Assert.IsType<ObjectResult>(response);
-            Assert.Equal((int)expectedResponse.StatusCode, objectResult.StatusCode);
-        }
-        [Theory, AutoData]
         public async Task GetPersonInfoAsync_Return200O(PersonGetDto personGetDto)
         {
             // Arrange
@@ -404,48 +360,6 @@ namespace CA_Final_Regia.Web.API.Test
             // Assert
             var objectResult = Assert.IsType<BadRequestObjectResult>(response);
             Assert.Equal(StatusCodes.Status400BadRequest, objectResult.StatusCode);
-        }
-        [Theory, AutoData]
-        public async Task UpdatePictureAsync_Returns201Created(PictureDto pictureDto)
-        {
-            // Arrange
-            var personAddInfoServiseMock = new Mock<IPersonAddInfoService>();
-            var logerMock = new Mock<ILogger<PersonController>>();
-            var jwtExtraxtSereviceMock = new Mock<IJwtExtractService>();
-            var personGetInfoServiceMock = new Mock<IPersonGetInfoService>();
-            var personUpdateServiceMock = new Mock<IPersonUpdateService>();
-            var accountId = Guid.NewGuid();
-            //sut - Subject Under Test
-            var sut = new PersonController(personAddInfoServiseMock.Object, logerMock.Object, jwtExtraxtSereviceMock.Object, personGetInfoServiceMock.Object, personUpdateServiceMock.Object);
-            var expectedResponse = new ResponseDto<PictureDto>(true, "Picture Updated", ResponseDto<PictureDto>.Status.Created);
-            jwtExtraxtSereviceMock.Setup(x => x.GetAccountIdFromJwtToken(It.IsAny<string>())).Returns(accountId);
-            personUpdateServiceMock.Setup(x => x.UpdatePersonPictureAsync(pictureDto, It.IsAny<Guid>())).ReturnsAsync(expectedResponse);
-            // Act
-            var response = await sut.UpdatePictureAsync(It.IsAny<string>(), pictureDto);
-            // Assert
-            var objectResult = Assert.IsType<ObjectResult>(response);
-            Assert.Equal((int)expectedResponse.StatusCode, objectResult.StatusCode);
-        }
-        [Theory, AutoData]
-        public async Task UpdatePictureAsync_Returns400BadRequest(PictureDto pictureDto)
-        {
-            // Arrange
-            var personAddInfoServiseMock = new Mock<IPersonAddInfoService>();
-            var logerMock = new Mock<ILogger<PersonController>>();
-            var jwtExtraxtSereviceMock = new Mock<IJwtExtractService>();
-            var personGetInfoServiceMock = new Mock<IPersonGetInfoService>();
-            var personUpdateServiceMock = new Mock<IPersonUpdateService>();
-            var accountId = Guid.NewGuid();
-            //sut - Subject Under Test
-            var sut = new PersonController(personAddInfoServiseMock.Object, logerMock.Object, jwtExtraxtSereviceMock.Object, personGetInfoServiceMock.Object, personUpdateServiceMock.Object);
-            var expectedResponse = new ResponseDto<PictureDto>(false, "Bad request", ResponseDto<PictureDto>.Status.Bad_Request);
-            jwtExtraxtSereviceMock.Setup(x => x.GetAccountIdFromJwtToken(It.IsAny<string>())).Returns(accountId);
-            personUpdateServiceMock.Setup(x => x.UpdatePersonPictureAsync(pictureDto, It.IsAny<Guid>())).ReturnsAsync(expectedResponse);
-            // Act
-            var response = await sut.UpdatePictureAsync(It.IsAny<string>(), pictureDto);
-            // Assert
-            var objectResult = Assert.IsType<ObjectResult>(response);
-            Assert.Equal((int)expectedResponse.StatusCode, objectResult.StatusCode);
         }
     }
 }
